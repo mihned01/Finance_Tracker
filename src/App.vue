@@ -1,37 +1,40 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <div class="nav-bar">
 
-    <div class="wrapper">
-   
+      <p>MoneyMate</p>
 
-      <nav>
+      <!-- <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+      </nav> -->
 
+      <button>Login</button>
+    </div>
+
+  </header>
   <RouterView />
 </template>
 
 <style scoped>
 header {
-  line-height: 1.5;
+  line-height: 1.3;
   max-height: 100vh;
+  margin:10px 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+/* nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
@@ -54,13 +57,55 @@ nav a {
 
 nav a:first-of-type {
   border: 0;
+} */
+
+
+.nav-bar {
+     width: 100%;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     align-content:space-between;
+     justify-content: space-between;
+ }
+ 
+ .nav-bar p {
+     font-size: 24px;
+     font-weight: bold;
+     color: var(--color-text);
+ }
+
+ /* .nav-bar a {
+  text-decoration: none;
+  font-size: 18px;
+  color: var(--color-text);
+  transition: 0.4s;
+  padding: 5px;
+ }
+  */
+ .nav-bar button {
+     padding: 10px 20px;
+     background-color: var(--color-button);
+     color: var(--color-background);
+     border: 1.5px solid transparent;
+     border-radius: 8px;
+     font-size: 14px;
+     cursor: pointer;
+     transition: all 0.3s ease;
+ }
+
+ .nav-bar button:hover {
+    background-color: var(--color-background);
+    color: var(--color-button);
+    border: 1.5px solid var(--color-button);
 }
+
+
 
 @media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
   }
 
   .logo {

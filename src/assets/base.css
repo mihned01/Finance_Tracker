@@ -1,4 +1,7 @@
 /* color palette from <https://github.com/vuejs/theme> */
+
+@import url("https://use.typekit.net/bpg7ljz.css");
+
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -39,15 +42,14 @@
 
 
 :root {
-  --color-background: var(#ffffff);
-  --color-secondary-background: var(#fafafa);
-  --color-main: var(#80FFCE);
-  --color-charts: var(#BABAFF);
-  --color-ccharts-secondary: var(#398FFF);
-  --color-charts-tertiary: var(#2B50AD);
-  --color-text: var(#2d2d2d);
-  --color-button: var(#000000);
-
+  --color-background: #ffffff;
+  --color-secondary-background: #fafafa;
+  --color-main: #80FFCE;
+  --color-charts: #BABAFF;
+  --color-charts-secondary: #308FFF;
+  --color-charts-tertiary: #2B50AD;
+  --color-text: #2d2d2d;
+  --color-button: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
