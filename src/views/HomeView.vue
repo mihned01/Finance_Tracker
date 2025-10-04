@@ -2,9 +2,9 @@
   <main class="hero-container">
      <div class="hero">
          <div class="hero-left">
-             <h1>Manage your personal finances smart & simple</h1>
-             <p>Track spending, manage budgets, and grow your savings — all in one place with MoneyMate.</p>
-             <button>Register</button>
+             <h1 class="static-text">Manage your personal finances smart & simple</h1>
+             <p class="static-text">Track spending, manage budgets, and grow your savings — all in one place with MoneyMate.</p>
+             <button class="static-theme">Register</button>
          </div>
          <div class="hero-right"></div>
      </div>
@@ -114,6 +114,24 @@
     background-color: var(--color-background);
     color: var(--color-button);
     border: 1.5px solid var(--color-button);
+}
+
+@media (prefers-color-scheme: dark) {
+
+    .static-text {
+    color: #2d2d2d !important;
+  }
+
+  .static-theme {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  .static-theme:hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+  }
 }
 
  </style>
