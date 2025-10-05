@@ -124,7 +124,7 @@ const navigateToLogin = () => {
 
  .hero {
      width: 100%;
-     height: 60vh;
+     height: 70vh;
      display: flex;
      align-items: center;
      justify-content: space-between;
