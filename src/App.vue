@@ -1,11 +1,11 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
 
-
+const route = useRoute()
 </script>
 
 <template>
-  <header>
+  <header v-if="route.path === '/'">
     <div class="nav-bar">
 
       <p>MoneyMate</p>
@@ -14,8 +14,8 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav> -->
-
-      <button>Login</button>
+<!-- 
+      <button>Login</button> -->
     </div>
 
   </header>

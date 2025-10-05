@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/LoginView.vue'
+import { useAuth } from '@/modules/useAuth.js'
 
 
 const router = createRouter({
@@ -10,6 +12,13 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
+
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/LoginView.vue'),
+    },
+
     {
       path: '/about',
       name: 'about',
@@ -18,6 +27,17 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
+
+    // router.beforeEach((to, from, next) => {
+    //   //destructure the isLoggedIn property from useAuth
+    //   const {isLoggedIn} = useAuth()
+    //   if (to.meta.requiresAuth && !isLoggedIn.value) {
+    //     next({name: 'login'}) //redirect to login page if not logged in
+    //   } else {
+    //     next()
+    //   }
+    // })
+
   ],
 })
 

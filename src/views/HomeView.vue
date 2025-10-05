@@ -4,7 +4,7 @@
          <div class="hero-left">
              <h1 class="static-text">Manage your personal finances smart & simple</h1>
              <p class="static-text">Track spending, manage budgets, and grow your savings — all in one place with MoneyMate.</p>
-             <button class="static-theme">Register</button>
+             <button class="static-theme" @click="navigateToLogin">Login</button>
          </div>
          <div class="hero-right">
             <div class="transaction-card">
@@ -71,8 +71,15 @@
  
  
  
- <script>
- 
+ <script setup>
+ import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const navigateToLogin = () => {
+  router.push('/login')
+}
+
  </script>
  
  
