@@ -28,6 +28,12 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
 
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/DashboardView.vue'),
+      meta: { requiresAuth: true } //this route requires authentication
+    },
     // router.beforeEach((to, from, next) => {
     //   //destructure the isLoggedIn property from useAuth
     //   const {isLoggedIn} = useAuth()
