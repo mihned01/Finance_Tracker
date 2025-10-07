@@ -1,6 +1,6 @@
 <template>
     <mainDash>
-      <!-- Dashboard specific content goes here -->
+      <!-- Transactions page specific content goes here -->
       <div class="dashboard-content">
         <h1>Dashboard</h1>
         <!-- Add your dashboard components, charts, statistics etc. -->
