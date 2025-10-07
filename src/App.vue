@@ -83,7 +83,7 @@ nav a:first-of-type {
   padding: 5px;
  }
   */
- .nav-bar button {
+ /* .nav-bar button {
      padding: 10px 20px;
      background-color: var(--color-button);
      color: var(--color-background);
@@ -98,7 +98,7 @@ nav a:first-of-type {
     background-color: var(--color-background);
     color: var(--color-button);
     border: 1.5px solid var(--color-button);
-}
+} */
 
 
 
