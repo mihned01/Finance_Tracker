@@ -45,7 +45,9 @@
   
       <!-- Main Content -->
       <div class="main-content">
-        <RouterView />
+        <div class="main-content-container">
+          <RouterView />
+        </div>
       </div>
     </div>
   </template>
@@ -66,13 +68,14 @@
   <style scoped>
   .dashboard-container {
     display: flex;
+    background-color: var(--color-main);
     min-height: 100vh;
   }
   
   .side-menu {
-    width: 280px;
+    width: 30%;
     background-color: var(--color-main);
-    padding: 2rem;
+    padding: 40px 0 40px 40px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -83,8 +86,8 @@
   }
   
   .profile-image {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.2);
     margin-bottom: 1rem;
@@ -111,7 +114,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 0.8rem 1rem;
+    padding: 0.5rem 0.2rem;
     border-radius: 8px;
     color: var(--color-text);
     text-decoration: none;
@@ -144,10 +147,16 @@
   }
   
   .main-content {
-    flex-grow: 1;
+    width: 70%;
+    background-color: var(--color-main);
+    padding: 40px 40px 0 40px;
+  }
+
+  .main-content-container {
+    width: 100%;
     background-color: var(--color-background);
-    padding: 2rem;
-    border-radius: 24px 0 0 24px;
-    margin: 1rem 0 1rem 0;
+    border-radius: 16px;
+    height: 100%;
+    overflow-y: auto;
   }
   </style>
