@@ -15,7 +15,7 @@ const route = useRoute()
         <RouterLink to="/about">About</RouterLink>
       </nav> -->
 
-      <button>Login</button> 
+      <!-- <button>Login</button>  -->
     </div>
 
   </header>
@@ -23,15 +23,16 @@ const route = useRoute()
 </template>
 
 <style scoped>
+
 header {
   line-height: 1.3;
   max-height: 100vh;
-  margin:10px 40px;
+  margin: 0 40px;
+  padding: 20px 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
 }
 
 /* nav {

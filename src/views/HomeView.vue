@@ -1,78 +1,90 @@
 <template>
-  <main class="hero-container">
-     <div class="hero">
-         <div class="hero-left">
-             <h1 class="static-text">Manage your personal finances smart & simple</h1>
-             <p class="static-text">Track spending, manage budgets, and grow your savings — all in one place with MoneyMate.</p>
-             <button class="static-theme" @click="navigateToLogin">Login</button>
-         </div>
-         <div class="hero-right">
-            <div class="transaction-card">
-                <div class="row1">
-                    <div class="transaction-item">
-                        <div class="category-icon shopping">
-                            <img src="@/assets/icons/bag-shopping-solid-full.svg" alt="icon">
-                        </div>
-                        <div class="transaction-details">
-                            <div class="details-left">
-                               <p>Shopping</p>
-                                <p class="date">15/09/2025</p> 
-                            </div>
-                            <div class="details-right">
-                                <p>DK -2489,00</p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="add-circle">+</div>
+  <main class="container">
+    <div class="hero-container">
+      <div class="hero">
+        <div class="hero-left">
+          <h1 class="static-text">Manage your personal finances smart & simple</h1>
+          <p class="static-text">Track spending, manage budgets, and grow your savings — all in one place with
+            MoneyMate.</p>
+          <button class="static-theme" @click="navigateToLogin">Login</button>
+        </div>
+        <div class="hero-right">
+          <div class="transaction-card">
+            <div class="row1">
+              <div class="transaction-item">
+                <div class="category-icon shopping">
+                  <img src="@/assets/icons/bag-shopping-solid-full.svg" alt="icon">
                 </div>
-                
-                <div class="balance-card">
-                    <div class="balance-left">
-                       <h3>Total Balance:</h3>
-                        <p class="balance">DK 10 000,00</p>
-                        <div class="month-select">
-                        <!--Left for future code: <option>Sept 2025</option> -->
-                        Sept 2025
-                        </div> 
-                    </div>
-                    <div class="balance-right">
-                        <img src="@/assets/icons/chart-column-solid-full.svg" alt="icon">
-                    </div>
-                    
+                <div class="transaction-details">
+                  <div class="details-left">
+                    <p>Shopping</p>
+                    <p class="date">15/09/2025</p>
+                  </div>
+                  <div class="details-right">
+                    <p>DK -2489,00</p>
+                  </div>
                 </div>
-
-                <div class="row2">
-                     <div class="add-circle">+</div>
-                    <div class="transaction-item">
-                     
-                        <div class="category-icon transport">
-                            <img src="@/assets/icons/car-solid-full.svg" alt="icon">
-                        </div>
-                        <div class="transaction-details"> 
-                        <div class="details-left">
-                            <p>Transport</p>
-                            <p class="date">13/08/2025</p> 
-                        </div>
-                        <div class="details-right">
-                            <p>DK -489,00</p>
-                        </div>
-                        </div>
-                    </div> 
-                </div>  
+              </div>
+              <div class="add-circle">+</div>
             </div>
-        </div> 
-     </div>
+
+            <div class="balance-card">
+              <div class="balance-left">
+                <h3>Total Balance:</h3>
+                <p class="balance">DK 10 000,00</p>
+                <div class="month-select">
+                  <!--Left for future code: <option>Sept 2025</option> -->
+                  Sept 2025
+                </div>
+              </div>
+              <div class="balance-right">
+                <img src="@/assets/icons/chart-column-solid-full.svg" alt="icon">
+              </div>
+            </div>
+
+            <div class="row2">
+              <div class="add-circle">+</div>
+              <div class="transaction-item">
+                <div class="category-icon transport">
+                  <img src="@/assets/icons/car-solid-full.svg" alt="icon">
+                </div>
+                <div class="transaction-details">
+                  <div class="details-left">
+                    <p>Transport</p>
+                    <p class="date">13/08/2025</p>
+                  </div>
+                  <div class="details-right">
+                    <p>DK -489,00</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-container">
+      <h1>Simple process to manage you personal finance</h1>
+      <div class="steps-section">
+        <div class="step-one"></div>
+        <div class="step-two"></div>
+        <div class="step-three"></div>
+      </div>
+      <h2>Track spending, manage budgets, and achieve your financial goals—all within MoneyMate.</h2>
+    </div>
+
+
   </main>
- 
- 
- 
- </template>
- 
- 
- 
- <script setup>
- import { useRouter } from 'vue-router'
+
+
+
+</template>
+
+
+
+<script setup>
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
@@ -80,104 +92,81 @@ const navigateToLogin = () => {
   router.push('/login')
 }
 
+</script>
 
 
- </script>
- 
- 
- 
- <style scoped>
- 
- .hero-container {
-     /* width: 100%; */
-     height: 80vh;
-     margin: 0 40px;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     /* justify-content: center; */
-     background-color: var(#fafafa);
- }
- 
- /* .nav-bar {
-     width: 90%;
-     height: 10vh;
-     margin: 40px;
-     display: flex;
-     flex-direction: row;
-     align-items: center;
-     justify-content: space-between;
- }
- 
- .nav-bar p {
-     font-size: 24px;
-     font-weight: bold;
-     color: var(--color-text);
- }
- 
- .nav-bar button {
-     padding: 10px 20px;
-     background-color: var(--color-button);
-     color: white;
-     border: none;
-     border-radius: 10px;
-     font-size: 16px;
- } */
 
- .hero {
-     width: 100%;
-     height: 70vh;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 0 5%;
-     background-color: var(--color-main);
-     border-radius: 20px
- }
+<style scoped>
+.container {
+  width: 100%;
+  height: fit-content;
+  background-color: #fafafa;
+}
 
- .hero-left {
-     width: 45%;
-     height: 100%;
-     display: flex;
-     flex-direction: column;
-     align-items: flex-start;
-     justify-content: center;
-     margin: 0 20px;
- }
+.hero-container {
+  height: 80vh;
+  margin: 10px 40px 10px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+}
 
- .hero-left h1 {
-     font-size: 32px;
-     font-family: Poppins, sans-serif;
-     font-weight: bold;
-     color: var(--color-text);
-     align-items: center;
- }
 
- .hero-left p {
-     font-size: 18px;
-     font-family: Poppins, sans-serif;
-     color: var(--color-text);
-     margin: 10px 0 20px 0;
-     align-items: center;
- }
+.hero {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  background-color: var(--color-main);
+  border-radius: 20px
+}
 
- .hero-left button {
-     padding: 10px 20px;
-     margin: 10px 0;
-     background-color: var(--color-button);
-     color: var(--color-background);
-     border: 1.5px solid transparent;
-     border-radius: 8px;
-     font-size: 14px;
-     cursor: pointer;
-     transition: all 0.3s ease;
-     align-items: center;
- }
+.hero-left {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0 20px;
+}
 
- .hero-left button:hover {
-    background-color: var(--color-background);
-    color: var(--color-button);
-    border: 1.5px solid var(--color-button);
+.hero-left h1 {
+  font-size: 32px;
+  font-family: Poppins, sans-serif;
+  font-weight: bold;
+  color: var(--color-text);
+  align-items: center;
+}
+
+.hero-left p {
+  font-size: 18px;
+  font-family: Poppins, sans-serif;
+  color: var(--color-text);
+  margin: 10px 0 20px 0;
+  align-items: center;
+}
+
+.hero-left button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  background-color: var(--color-button);
+  color: var(--color-background);
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-items: center;
+}
+
+.hero-left button:hover {
+  background-color: var(--color-background);
+  color: var(--color-button);
+  border: 1.5px solid var(--color-button);
 }
 
 
@@ -214,7 +203,8 @@ const navigateToLogin = () => {
 }
 
 .add-circle {
-  position: static; /* Remove absolute positioning */
+  position: static;
+  /* Remove absolute positioning */
   width: 40px;
   height: 40px;
   background: rgba(250, 250, 250, 0.5);
@@ -249,7 +239,8 @@ const navigateToLogin = () => {
 
 .transaction-item p {
   margin: 0;
-  font-size: 10px;}
+  font-size: 10px;
+}
 
 .category-icon {
   width: 40px;
@@ -301,9 +292,9 @@ const navigateToLogin = () => {
   animation: float 3s ease-in-out infinite;
 }
 
-.balance-left{
-    text-align: left;
-    flex: 0.6;
+.balance-left {
+  text-align: left;
+  flex: 0.6;
 }
 
 .balance-right {
@@ -351,9 +342,11 @@ const navigateToLogin = () => {
   0% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-8px);
   }
+
   100% {
     transform: translateY(0px);
   }
@@ -363,19 +356,67 @@ const navigateToLogin = () => {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }
+}
+
+.process-container {
+  width: 100%;
+  height: fit-content;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-backgorund);
+}
+
+.process-container h1 {
+  font-size: 28px;
+  font-family: Poppins, sans-serif;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 20px;
+}
+
+.steps-section {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.step-one, .step-two, .step-three {
+  width: 20%;
+  height: 200px;
+  border-radius: 16px;
+  margin: 50px 0;
+}
+
+.step-one {
+  background-color: var(--color-charts);
+}
+
+.step-two {
+  background-color: var(--color-charts-secondary);
+}
+
+.step-three {
+  background-color: var(--color-charts-three);
 }
 
 
 
 @media (prefers-color-scheme: dark) {
 
-    .static-text {
+  .static-text {
     color: #2d2d2d !important;
   }
 
@@ -390,6 +431,4 @@ const navigateToLogin = () => {
     border-color: #000000 !important;
   }
 }
-
-
- </style>
+</style>
