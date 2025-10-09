@@ -80,6 +80,8 @@ const navigateToLogin = () => {
   router.push('/login')
 }
 
+
+
  </script>
  
  
@@ -129,7 +131,7 @@ const navigateToLogin = () => {
      align-items: center;
      justify-content: space-between;
      padding: 0 5%;
-     background-color: #80FFCE;
+     background-color: var(--color-main);
      border-radius: 20px
  }
 
@@ -223,6 +225,7 @@ const navigateToLogin = () => {
   justify-content: center;
   font-size: 24px;
   color: var(--color-background);
+  animation: float 3s ease-in-out infinite;
 }
 
 .transaction-item {
@@ -233,6 +236,7 @@ const navigateToLogin = () => {
   background: rgba(250, 250, 250, 0.5);
   border: 1.7px solid var(--color-secondary-background);
   border-radius: 12px;
+  animation: float 3.5s ease-in-out infinite;
 }
 
 .transaction-details {
@@ -294,6 +298,7 @@ const navigateToLogin = () => {
   margin: 15px 0;
   display: flex;
   flex-direction: row;
+  animation: float 3s ease-in-out infinite;
 }
 
 .balance-left{
@@ -332,7 +337,39 @@ const navigateToLogin = () => {
   margin-top: 10px;
 }
 
+.row2 .transaction-item {
+  animation-delay: 0.5s;
+}
 
+.row2 .add-circle {
+  animation-delay: 0.5s;
+}
+
+
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 
 
@@ -353,5 +390,6 @@ const navigateToLogin = () => {
     border-color: #000000 !important;
   }
 }
+
 
  </style>

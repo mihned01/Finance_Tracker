@@ -14,8 +14,8 @@ const route = useRoute()
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav> -->
-<!-- 
-      <button>Login</button> -->
+
+      <button>Login</button> 
     </div>
 
   </header>
@@ -75,15 +75,15 @@ nav a:first-of-type {
      color: var(--color-text);
  }
 
- /* .nav-bar a {
+ .nav-bar a {
   text-decoration: none;
   font-size: 18px;
   color: var(--color-text);
   transition: 0.4s;
   padding: 5px;
  }
-  */
- /* .nav-bar button {
+
+ .nav-bar button {
      padding: 10px 20px;
      background-color: var(--color-button);
      color: var(--color-background);
@@ -98,7 +98,7 @@ nav a:first-of-type {
     background-color: var(--color-background);
     color: var(--color-button);
     border: 1.5px solid var(--color-button);
-} */
+} 
 
 
 
