@@ -67,11 +67,56 @@
     <div class="process-container">
       <h1>Simple process to manage you personal finance</h1>
       <div class="steps-section">
-        <div class="step-one"></div>
-        <div class="step-two"></div>
-        <div class="step-three"></div>
+        <div class="step">
+          <div class="step-one">
+            <img src="@/assets/icons/user-plus-solid-full.svg" alt="Create account">
+          </div>
+          <p>Create an account</p>
+        </div>
+        <div class="connector"></div>
+        <div class="step">
+          <div class="step-two">
+            <img src="@/assets/icons/chart-simple-solid-full.svg" alt="Save transaction">
+          </div>
+          <p>Save Transaction</p>
+        </div>
+        <div class="connector"></div>
+        <div class="step">
+          <div class="step-three">
+            <img src="@/assets/icons/chart-line-solid-full.svg" alt="Track finance">
+          </div>
+          <p>Track Finance</p>
+        </div>
       </div>
       <h2>Track spending, manage budgets, and achieve your financial goals—all within MoneyMate.</h2>
+    </div>
+
+    <div class="features-section">
+      <h1>Take control of your money</h1>
+      <h2>Track spending, manage budgets, and achieve your financial goals—all within MoneyMate.</h2>
+      <div class="features-container">
+        <div class="feature-box">
+          <div class="feature-box-top">
+            <h3>Smart Transaction Logging</h3>
+            <p>Log expenses in seconds. Quickly add and categorize your transactions on the go. Attach notes, dates, and amounts instantly so nothing slips through the cracks.</p>
+          </div>
+          <div class="feature-box-bottom"></div>
+        </div>
+        <div class="feature-box">
+          <div class="feature-box-top">
+            <h3>Powerful Category Tracking</h3>
+            <p>See exactly where your money goes. Use pre-set categories (like Groceries, Transport, Bills) or create your own to organize spending and identify areas for improvement.</p>
+          </div>
+          <div class="feature-box-bottom"></div>
+        </div>
+        <div class="feature-box">
+          <div class="feature-box-top">
+            <h3>Visual Analytics & Insights</h3>
+            <p>Stop guessing. Start knowing. Get clear, visual reports on your spending habits over time. Check monthly summaries and statistics to make informed financial decisions.</p>
+          </div>
+          <div class="feature-box-bottom"></div>
+        </div>
+      </div>
     </div>
 
 
@@ -92,6 +137,15 @@ const navigateToLogin = () => {
   router.push('/login')
 }
 
+import { waapi, utils, stagger, spring } from 'animejs';
+
+waapi.animate('.connector', {
+  y: [0, -30, 0],
+  ease: spring({ stiffness: 150, damping: 5 }),
+  delay: stagger(75),
+  loop: true,
+});
+
 </script>
 
 
@@ -104,7 +158,7 @@ const navigateToLogin = () => {
 }
 
 .hero-container {
-  height: 80vh;
+  height: 75vh;
   margin: 10px 40px 10px 40px;
   display: flex;
   flex-direction: column;
@@ -369,7 +423,7 @@ const navigateToLogin = () => {
 .process-container {
   width: 100%;
   height: fit-content;
-  margin: 10px 0;
+  margin: 0 40px; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -378,26 +432,70 @@ const navigateToLogin = () => {
 }
 
 .process-container h1 {
-  font-size: 28px;
+  width: 40%;
+  font-size: 32px;
   font-family: Poppins, sans-serif;
   font-weight: bold;
   color: var(--color-text);
-  margin-bottom: 20px;
+  text-align: center;
+}
+
+.process-container h2 {
+  font-size: 18px;
+  font-family: Poppins, sans-serif;
+  color: var(--color-text);
+  width: 60%;
+  text-align: center;
 }
 
 .steps-section {
   width: 80%;
+  margin: 40px 0 40px 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-bottom: 10px;
 }
 
-.step-one, .step-two, .step-three {
-  width: 20%;
-  height: 200px;
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-one,
+.step-two,
+.step-three {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: 90%;
+  height: 130px;
   border-radius: 16px;
-  margin: 50px 0;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-one img,
+.step-two img,
+.step-three img {
+  width: 50%;
+  height: 150px;
+  filter: brightness(0) saturate(100%) invert(100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step p {
+  font-size: 16px;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  color: var(--color-text);
+  text-align: center;
 }
 
 .step-one {
@@ -411,6 +509,16 @@ const navigateToLogin = () => {
 .step-three {
   background-color: var(--color-charts-three);
 }
+
+.connector {
+  flex: 1;
+  height: 2px;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cline x1='0' y1='0' x2='100%25' y2='0' stroke='%23666666' stroke-width='2' stroke-dasharray='8%2c8'/%3e%3c/svg%3e");
+  max-width: 150px;
+  position: relative;
+  z-index: 1;
+}
+
 
 
 
