@@ -88,22 +88,24 @@
   .profile-image {
     width: 40px;
     height: 40px;
+    padding: 10px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.2);
     margin-bottom: 1rem;
   }
   
   .user-info h2 {
-    font-size: 1.2rem;
+    font-size: 18px;
     margin-bottom: 0.5rem;
   }
   
   .user-info p {
-    font-size: 0.9rem;
+    font-size: 14px;
     opacity: 0.8;
   }
   
   .menu-items {
+    margin-top: 40px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -118,18 +120,21 @@
     border-radius: 8px;
     color: var(--color-text);
     text-decoration: none;
+    font-size: 15px;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
     transition: background-color 0.3s;
   }
   
-  .menu-item:hover,
-  .menu-item.router-link-active {
-    background-color: rgba(255, 255, 255, 0.1);
+  .menu-item:hover {
+    color: var(--color-background);
   }
   
   .menu-item img {
     width: 25px;
     text-align: center;
   }
+  
   
   .menu-footer {
     margin-top: auto;
@@ -147,9 +152,9 @@
   }
   
   .main-content {
-    width: 70%;
+    width: 100%;
     background-color: var(--color-main);
-    padding: 40px 40px 0 40px;
+    padding: 40px 40px 40px 40px;
   }
 
   .main-content-container {
