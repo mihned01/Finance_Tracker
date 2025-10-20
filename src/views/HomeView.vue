@@ -88,7 +88,6 @@
           <p>Track Finance</p>
         </div>
       </div>
-      <h2>Track spending, manage budgets, and achieve your financial goals—all within MoneyMate.</h2>
     </div>
 
     <div class="features-section">
@@ -391,7 +390,6 @@ waapi.animate('.connector', {
 }
 
 
-
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -420,8 +418,10 @@ waapi.animate('.connector', {
   }
 }
 
+
+
 .process-container {
-  width: 100%;
+  /* width: 100%; */
   height: fit-content;
   margin: 0 40px; 
   display: flex;
@@ -440,13 +440,6 @@ waapi.animate('.connector', {
   text-align: center;
 }
 
-.process-container h2 {
-  font-size: 18px;
-  font-family: Poppins, sans-serif;
-  color: var(--color-text);
-  width: 60%;
-  text-align: center;
-}
 
 .steps-section {
   width: 80%;
@@ -518,6 +511,70 @@ waapi.animate('.connector', {
   position: relative;
   z-index: 1;
 }
+
+.features-section {
+  height: fit-content;
+  margin: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-background);
+}
+
+.features-section h1 {
+  font-size: 32px;
+  font-family: Poppins, sans-serif;
+  font-weight: bold;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 18px;
+  font-family: Poppins, sans-serif;
+  color: var(--color-text);
+  width: 60%;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.features-container {
+  display: flex;
+  color: var(--color-background);
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.feature-box {
+  background: var(--color-main);
+  border-radius: 16px;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.feature-box-top {
+  padding: 30px;
+}
+
+.feature-box-top h3 {
+  font-size: 20px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 15px;
+}
+
+.feature-box-top p {
+  font-size: 14px;
+  font-family: Poppins, sans-serif;
+  color: var(--color-text);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
 
 
 
