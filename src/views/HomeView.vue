@@ -99,24 +99,83 @@
             <h3>Smart Transaction Logging</h3>
             <p>Log expenses in seconds. Quickly add and categorize your transactions on the go. Attach notes, dates, and amounts instantly so nothing slips through the cracks.</p>
           </div>
-          <div class="feature-box-bottom"></div>
+          <div class="feature-box-bottom">
+            <img src="@/assets/icons/feature3.png" alt="chart example">
+          </div>
         </div>
         <div class="feature-box">
           <div class="feature-box-top">
             <h3>Powerful Category Tracking</h3>
             <p>See exactly where your money goes. Use pre-set categories (like Groceries, Transport, Bills) or create your own to organize spending and identify areas for improvement.</p>
           </div>
-          <div class="feature-box-bottom"></div>
+          <div class="feature-box-bottom">            
+            <img src="@/assets/icons/feature2.png" alt="categorized expenses example">
+          </div>
         </div>
         <div class="feature-box">
           <div class="feature-box-top">
             <h3>Visual Analytics & Insights</h3>
             <p>Stop guessing. Start knowing. Get clear, visual reports on your spending habits over time. Check monthly summaries and statistics to make informed financial decisions.</p>
           </div>
-          <div class="feature-box-bottom"></div>
+          <div class="feature-box-bottom">
+            <img src="@/assets/icons/feature3.png" alt="chart example">
+          </div>
         </div>
       </div>
     </div>
+
+
+    <div class="security-section">
+      <h1>Your Data, Your Control</h1>
+      <h2>We prioritize simplicity and privacy, ensuring you have full access to your financial records and no one else.</h2>
+      
+      <div class="security-top">
+        <div class="security-top-left">
+          <div class="security-top-left-text">
+            <h3>Private Account Acess</h3>
+            <p>Your data is accessed only through your unique login credentials, ensuring your transactions and balance remain private to you.</p>
+          </div>
+          <div class="security-top-left-icon">
+            <img src="@/assets/icons/lock-solid-full.svg" alt="security icon">
+          </div>
+        </div>
+
+        <div class="security-top-right">
+          <div class="security-top-right-text">
+            <h3>Separated Data Environment</h3>
+            <p>Your tracking data is kept in a separate, dedicated environment and is not shared with any external financial institutions or third parties.</p>
+          </div>
+          <div class="security-top-right-icon">
+            <img src="@/assets/icons/lock-solid-full.svg" alt="security icon">
+          </div>
+        </div>
+      </div>
+      
+      <div class="security-bottom">
+        <div class="security-bottom-left">
+          <div class="security-bottom-left-text">
+            <h3>PFull Transaction Control</h3>
+            <p>You have the power to manage your history. Easily edit or delete any transaction record at any time, ensuring your financial overview is always accurate.</p>
+          </div>
+          <div class="security-bottom-left-icon">
+            <img src="@/assets/icons/lock-solid-full.svg" alt="security icon">
+          </div>
+        </div>
+
+        <div class="security-bottom-right">
+          <div class="security-bottom-right-text">
+            <h3>No Banking Credentials Stored</h3>
+            <p>MoneyMate is a finance tracker, not a bank. We never ask for or store sensitive banking passwords or full credit card numbers.</p>
+          </div>
+          <div class="security-bottm-right-icon">
+            <img src="@/assets/icons/lock-solid-full.svg" alt="security icon">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
 
 
   </main>
@@ -129,14 +188,17 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { waapi, utils, stagger, spring } from 'animejs'
+import { onMounted } from 'vue'
 
 const router = useRouter()
+
 
 const navigateToLogin = () => {
   router.push('/login')
 }
 
-import { waapi, utils, stagger, spring } from 'animejs';
+
 
 waapi.animate('.connector', {
   y: [0, -30, 0],
@@ -144,6 +206,24 @@ waapi.animate('.connector', {
   delay: stagger(75),
   loop: true,
 });
+
+
+onMounted(() => {
+  const featureBoxes = document.querySelectorAll('.feature-box')
+  
+  featureBoxes.forEach(box => {
+    box.addEventListener('mouseenter', () => {
+      box.style.transform = 'scale(1.03)'
+      box.style.transition = 'transform 0.3s ease'
+      box.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)'
+    })
+    
+    box.addEventListener('mouseleave', () => {
+      box.style.transform = 'scale(1)'
+      box.style.boxShadow = 'none'
+    })
+  })
+})
 
 </script>
 
@@ -256,8 +336,6 @@ waapi.animate('.connector', {
 }
 
 .add-circle {
-  position: static;
-  /* Remove absolute positioning */
   width: 40px;
   height: 40px;
   background: rgba(250, 250, 250, 0.5);
@@ -463,7 +541,7 @@ waapi.animate('.connector', {
   transition: transform 0.3s ease;
   width: 90%;
   height: 130px;
-  border-radius: 16px;
+  border-radius: 8px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -484,7 +562,7 @@ waapi.animate('.connector', {
 }
 
 .step p {
-  font-size: 16px;
+  font-size: 18px;
   font-family: Poppins, sans-serif;
   font-weight: 500;
   color: var(--color-text);
@@ -547,13 +625,14 @@ waapi.animate('.connector', {
 }
 
 .feature-box {
-  background: var(--color-main);
-  border-radius: 16px;
+  background: rgba(128, 255, 206, 0.5);
+  border-radius: 8px;
   width: 30%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 
 .feature-box-top {
   padding: 30px;
@@ -571,10 +650,148 @@ waapi.animate('.connector', {
   font-size: 14px;
   font-family: Poppins, sans-serif;
   color: var(--color-text);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
 }
 
+.feature-box-bottom {
+  padding: 0 30px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.feature-box-bottom img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+.security-section {
+  height: fit-content;
+  margin: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.security-section h1 {
+  font-size: 32px;
+  font-family: Poppins, sans-serif;
+  font-weight: bold;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.security-section h2 {
+  font-size: 18px;
+  font-family: Poppins, sans-serif;
+  color: var(--color-text);
+  width: 60%;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.security-top, 
+.security-bottom {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* SECUTITY CARDS */
+.security-top-left {
+  flex: 1.2;
+  background: var(--color-main);
+  border: 0.1px solid #2d2d2d;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.security-top-left-text {
+  width: 60%;
+  margin: 30px;
+}
+
+.security-top-left-text h3 {
+  font-size: 20px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 15px;
+}
+
+.security-top-left-text p {
+  font-size: 14px;
+  font-family: Poppins, sans-serif;
+  color: var(--color-text);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.security-top-left-icon {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.security-top-left-icon img {
+  width: 80px;
+  height: 80px;
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+
+.security-top-right{
+  flex: 0.8;
+  background: var(--color-background);
+  border: 0.1px solid #2d2d2d;
+  border-radius: 8px;
+  padding: 30px;
+  display: flex;
+  align-items: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.security-bottom-left {
+  flex: 0.8;
+  background: var(--color-background);
+  border: 0.1px solid #2d2d2d;
+  border-radius: 8px;
+  padding: 30px;
+  display: flex;
+  align-items: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.security-bottom-right {
+  flex: 1.2;
+  background: rgba(128, 255, 206, 0.5);
+  border: 0.1px solid #2d2d2d;
+  border-radius: 8px;
+  padding: 30px;
+  display: flex;
+  align-items: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+
+/* Add hover effects */
+.security-top-left:hover,
+.security-top-right:hover,
+.security-bottom-left:hover,
+.security-bottom-right:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
 
 
 
