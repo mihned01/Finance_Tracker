@@ -52,6 +52,12 @@
   --color-button: #000000;
 }
 
+/* Create a proper type scale */
+h1 { font-family: Poppins, sans-serif; font-size: clamp(28px, 4vw, 42px); } /* Responsive sizing */
+h2 { font-family: Poppins, sans-serif; font-size: clamp(24px, 3vw, 32px); }
+h3 { font-family: Poppins, sans-serif; font-size: clamp(18px, 2.5vw, 24px); }
+
+
 /* Dark mode - automatically applies when system is in dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -73,7 +79,7 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background);
+  background: var(--color-secondary-background);
   transition:
     color 0.5s,
     background-color 0.5s;
