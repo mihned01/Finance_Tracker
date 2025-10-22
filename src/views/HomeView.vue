@@ -921,25 +921,25 @@ onMounted(() => {
 }
 
 
- /* Add hover effects */
+/* Add hover effects */
 .security-top-left:hover,
 .security-top-right:hover,
 .security-bottom-left:hover,
 .security-bottom-right:hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-} 
+}
 
 /* FOOTER SECTION */
 .footer-section {
   background-color: var(--color-main);
   padding: 30px 0;
   margin: 0;
-  margin-top: 40px; 
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw; 
-  margin-left: calc(-50vw + 50%); 
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
 }
 
 .footer-section p {
