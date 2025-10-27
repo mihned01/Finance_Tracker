@@ -1,5 +1,5 @@
-import { onMounted, ref, computed } from 'vue';
-import { collection, onSnapshot, doc, addDoc, deleteDoc, updateDoc, query, where, orderBy } from "firebase/firestore";
+import { ref, computed, watch, onUnmounted } from 'vue';
+import { collection, onSnapshot, addDoc, deleteDoc, doc, query, where, orderBy, serverTimestamp } from "firebase/firestore";
 import { db } from './firebase.js';
 import { useAuth } from './useAuth.js';
 
@@ -19,6 +19,7 @@ export function useTransactions() {
   
   const errorMessage = ref('');
   const showErrorMessage = ref(false);
+  const isLoading = ref(false);
   
   const categories = ref([
     'Food & Drinks',
@@ -30,66 +31,147 @@ export function useTransactions() {
     'Healthcare',
     'Utilities',
     'Salary',
-    'Freelance',
-    'Investment',
     'Other'
   ]);
 
- 
-  onMounted(() => {
-    if (currentUser.value) {
-      // Create a query to only get current user's transactions
+  let unsubscribe = null; // Store unsubscribe function to prevent memory leaks
+
+  // Setup Firebase listener
+  const setupTransactionsListener = (user) => {
+    if (!user) {
+      transactions.value = [];
+      return;
+    }
+
+    try {
+      console.log('Setting up listener for user:', user.uid);
+      
       const q = query(
         collection(db, transactionsFBcollectionRef),
-        where("userId", "==", currentUser.value.uid),
+        where("userId", "==", user.uid),
         orderBy("createdAt", "desc")
       );
       
-      onSnapshot(q, (snapshot) => {
-        transactions.value = snapshot.docs.map(doc => ({ 
-          id: doc.id, 
-          ...doc.data() 
-        }));
-      });
+      unsubscribe = onSnapshot(q, 
+        (snapshot) => {
+          console.log('Snapshot received, docs count:', snapshot.docs.length);
+          transactions.value = snapshot.docs.map(doc => {
+            const data = doc.data();
+            return { 
+              id: doc.id, 
+              ...data,
+              // Ensure date and time are properly formatted
+              date: data.date || new Date(data.createdAt).toLocaleDateString('en-GB'),
+              time: data.time || new Date(data.createdAt).toLocaleTimeString('en-GB', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+              })
+            };
+          });
+          console.log('Transactions updated:', transactions.value.length);
+        },
+        (error) => {
+          console.error("Error fetching transactions:", error);
+          errorMessage.value = "Error loading transactions";
+          showErrorMessage.value = true;
+          setTimeout(() => {
+            showErrorMessage.value = false;
+          }, 5000);
+        }
+      );
+    } catch (error) {
+      console.error("Error setting up listener:", error);
     }
+  };
+
+  // Clean up previous listener
+  const cleanupListener = () => {
+    if (unsubscribe) {
+      console.log('Cleaning up previous listener');
+      unsubscribe();
+      unsubscribe = null;
+    }
+  };
+
+  // Watch for currentUser changes
+  watch(currentUser, (newUser, oldUser) => {
+    console.log('User changed:', { newUser: newUser?.uid, oldUser: oldUser?.uid });
+    
+    // Always cleanup first
+    cleanupListener();
+    
+    // Setup new listener if user exists
+    if (newUser) {
+      setupTransactionsListener(newUser);
+    } else {
+      transactions.value = [];
+    }
+  }, { immediate: true });
+
+  // Cleanup on component unmount
+  onUnmounted(() => {
+    console.log('Component unmounting, cleaning up listener');
+    cleanupListener();
   });
 
-  // Add transaction 
+  // Add transaction with better error handling
   const addTransaction = async () => {
+    // Clear previous errors
+    showErrorMessage.value = false;
+    errorMessage.value = '';
+
     if (!currentUser.value) {
       errorMessage.value = "You must be logged in to add transactions";
       showErrorMessage.value = true;
+      setTimeout(() => {
+        showErrorMessage.value = false;
+      }, 3000);
       return;
     }
 
     // Validation
-    if (!newTransaction.value.amount || !newTransaction.value.description || !newTransaction.value.category) {
-      errorMessage.value = "All fields are required!";
+    if (!newTransaction.value.amount || !newTransaction.value.category) {
+      errorMessage.value = "Amount and category are required!";
       showErrorMessage.value = true;
+      setTimeout(() => {
+        showErrorMessage.value = false;
+      }, 3000);
       return;
     }
 
     if (parseFloat(newTransaction.value.amount) <= 0) {
       errorMessage.value = "Amount must be greater than 0!";
       showErrorMessage.value = true;
+      setTimeout(() => {
+        showErrorMessage.value = false;
+      }, 3000);
       return;
     }
+
+    isLoading.value = true;
 
     try {
       const now = new Date();
       
-      await addDoc(collection(db, transactionsFBcollectionRef), {
+      console.log("Adding transaction for user:", currentUser.value.uid);
+      
+      const docRef = await addDoc(collection(db, transactionsFBcollectionRef), {
         amount: parseFloat(newTransaction.value.amount),
-        description: newTransaction.value.description.trim(),
+        description: newTransaction.value.description?.trim() || newTransaction.value.category,
         category: newTransaction.value.category,
         type: newTransaction.value.type,
         userId: currentUser.value.uid,
         userEmail: currentUser.value.email,
-        createdAt: now.toISOString(),
-        date: now.toLocaleDateString('en-GB'), // DD/MM/YYYY format
-        time: now.toLocaleTimeString('en-GB'), // HH:MM:SS format
-        timestamp: now // For easier querying
+        createdAt: serverTimestamp(), // Use server timestamp for consistency
+        date: now.toLocaleDateString('en-GB'),
+        time: now.toLocaleTimeString('en-GB', { 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        }),
+        timestamp: now.getTime()
       });
+
+      console.log("Transaction added with ID:", docRef.id);
 
       // Reset form
       newTransaction.value = {
@@ -99,27 +181,51 @@ export function useTransactions() {
         type: 'expense'
       };
       
-      showErrorMessage.value = false;
-      console.log("Transaction added successfully!");
-      
     } catch (error) {
-      console.error("Error adding transaction: ", error);
+      console.error("Error adding transaction:", error);
       errorMessage.value = "Error adding transaction. Please try again.";
       showErrorMessage.value = true;
+      setTimeout(() => {
+        showErrorMessage.value = false;
+      }, 5000);
+    } finally {
+      isLoading.value = false;
     }
   };
 
- 
+  // Delete transaction with better error handling
+  const deleteTransaction = async (id) => {
+    if (!currentUser.value) {
+      errorMessage.value = "You must be logged in to delete transactions";
+      showErrorMessage.value = true;
+      return;
+    }
+
+    try {
+      console.log("Deleting transaction:", id);
+      await deleteDoc(doc(db, transactionsFBcollectionRef, id));
+      console.log("Transaction deleted successfully");
+    } catch (error) {
+      console.error("Error deleting transaction:", error);
+      errorMessage.value = "Error deleting transaction. Please try again.";
+      showErrorMessage.value = true;
+      setTimeout(() => {
+        showErrorMessage.value = false;
+      }, 3000);
+    }
+  };
+
+  // Computed properties
   const totalExpenses = computed(() => {
     return transactions.value
       .filter(t => t.type === 'expense')
-      .reduce((total, transaction) => total + transaction.amount, 0);
+      .reduce((total, transaction) => total + (transaction.amount || 0), 0);
   });
 
   const totalIncome = computed(() => {
     return transactions.value
       .filter(t => t.type === 'income')
-      .reduce((total, transaction) => total + transaction.amount, 0);
+      .reduce((total, transaction) => total + (transaction.amount || 0), 0);
   });
 
   const balance = computed(() => {
@@ -127,18 +233,8 @@ export function useTransactions() {
   });
 
   const recentTransactions = computed(() => {
-    return transactions.value.slice(0, 5); // Get 5 most recent
+    return transactions.value.slice(0, 5);
   });
-
-  // Delete transaction
-  const deleteTransaction = async (id) => {
-    try {
-      const transactionDoc = doc(db, transactionsFBcollectionRef, id);
-      await deleteDoc(transactionDoc);
-    } catch (error) {
-      console.log("Error deleting transaction: ", error);
-    }
-  };
 
   return {
     transactions,
@@ -146,6 +242,7 @@ export function useTransactions() {
     categories,
     errorMessage,
     showErrorMessage,
+    isLoading,
     addTransaction,
     deleteTransaction,
     totalExpenses,

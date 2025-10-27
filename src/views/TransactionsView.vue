@@ -59,7 +59,7 @@
 
             <div class="stat-card expenses">
               <p class="stat-label">Expenses</p>
-              <p class="stat-number"></p>
+              <p class="stat-number">4727</p>
               <p class="stat-subtitle">5% more than previous month</p>
               <div class="stat-trend">
                 <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
@@ -85,9 +85,9 @@
             <h3>Add Transaction</h3>
 
             <!-- Error Message -->
-            <div v-if="showErrorMessage" class="error-message">
+            <!-- <div v-if="showErrorMessage" class="error-message">
               {{ errorMessage }}
-            </div>
+            </div> -->
 
             <div class="form-group">
               <label>Amount</label>
@@ -112,10 +112,12 @@
             </div>
 
             <div class="transaction-type">
-              <button class="type-btn expense-btn" :class="{ active: newTransaction.type === 'expense' }" @click="setTransactionType('expense')" type="button">
+              <button class="type-btn expense-btn" :class="{ active: newTransaction.type === 'expense' }"
+                @click="setTransactionType('expense')" type="button">
                 Expense
               </button>
-              <button class="type-btn income-btn" :class="{ active: newTransaction.type === 'income' }" @click="setTransactionType('income')" type="button">
+              <button class="type-btn income-btn" :class="{ active: newTransaction.type === 'income' }"
+                @click="setTransactionType('income')" type="button">
                 Income
               </button>
             </div>
@@ -131,45 +133,26 @@
           <div class="history-card">
             <div class="history-header">
               <h3>Recent Transactions</h3>
-            <button class="static-theme" @click="navigateToCategories">View All</button>
+              <button class="static-theme" @click="navigateToCategories">View All</button>
             </div>
 
             <div class="transaction-list">
-              <div class="transaction-item">
-                <div class="transaction-icon income-icon">
-                  <span>S</span>
-                </div>
-                <div class="transaction-details">
-                  <p class="transaction-name">Income</p>
-                  <p class="transaction-date">Oct 1, 2025</p>
-                </div>
-                <div class="transaction-amount income-amount">
-                  + 16 000DK
-                </div>
-              </div>
-              <div class="transaction-item">
-                <div class="transaction-icon food-icon">
-                  <span>🍽️</span>
-                </div>
-                <div class="transaction-details">
-                  <p class="transaction-name">Food</p>
-                  <p class="transaction-date">Sep 29, 2025</p>
-                </div>
-                <div class="transaction-amount expense-amount">
-                  - 129DK
-                </div>
+              <!-- Show message if no transactions -->
+              <div v-if="recentTransactions.length === 0" class="no-transactions">
+                <p>No transactions yet. Add your first transaction!</p>
               </div>
 
-              <div class="transaction-item">
-                <div class="transaction-icon education-icon">
-                  <span>🎓</span>
+              <!-- Loop through actual transactions -->
+              <div v-for="transaction in recentTransactions" :key="transaction.id" class="transaction-item">
+                <div class="transaction-icon" :class="getCategoryStyle(transaction.category)">
+                  <img :src="getCategoryIcon(transaction.category)" :alt="transaction.category" class="category-svg">
                 </div>
                 <div class="transaction-details">
-                  <p class="transaction-name">Education</p>
-                  <p class="transaction-date">Aug 11, 2025</p>
+                  <p class="transaction-name">{{ transaction.category }}</p>
+                  <p class="transaction-date">{{ transaction.date }} at {{ transaction.time }}</p>
                 </div>
-                <div class="transaction-amount expense-amount">
-                  - 389DK
+                <div class="transaction-amount" :class="transaction.type + '-amount'">
+                  {{ transaction.type === 'income' ? '+' : '-' }} DK {{ transaction.amount.toFixed(2) }}
                 </div>
               </div>
             </div>
@@ -199,9 +182,10 @@ const {
   showErrorMessage,
   addTransaction,
   deleteTransaction,
-  totalExpenses,      // Change from getTotalExpenses
-  totalIncome,        // Change from getTotalIncome
-  balance             // Change from getBalance
+  totalExpenses,
+  totalIncome,
+  balance,
+  recentTransactions
 } = useTransactions()
 
 const handleLogout = async () => {
@@ -216,6 +200,40 @@ const navigateToCategories = () => {
 const setTransactionType = (type) => {
   newTransaction.value.type = type
 }
+
+// Helper function for category icons (SVG file paths)
+const getCategoryIcon = (category) => {
+  const icons = {
+    'Food & Drinks': '/src/assets/icons/utensils-solid-full.svg',
+    'Transport': '/src/assets/icons/car-solid-full.svg',
+    'Shopping': '/src/assets/icons/bag-shopping-solid-full.svg',
+    'Education': '/src/assets/icons/book-open-solid-full.svg',
+    'Housing': '/src/assets/icons/house-solid-full.svg',
+    'Travel': 'src/assets/icons/plane-solid-full.svg',
+    'Healthcare': '/src/assets/icons/heart-pulse-solid-full.svg',
+    'Utilities': '/src/assets/icons/bolt-solid-full.svg',
+    'Salary': '/src/assets/icons/dollar-sign-solid-full.svg',
+    'Other': '/src/assets/icons/category.svg'
+  };
+  return icons[category] || '@/assets/icons/category.svg';
+};
+
+// Helper function for category colors/styles
+const getCategoryStyle = (category) => {
+  const styles = {
+    'Food & Drinks': 'food-icon',
+    'Transport': 'transport-icon',
+    'Shopping': 'shopping-icon',
+    'Education': 'education-icon',
+    'Housing': 'housing-icon',
+    'Travel': 'travel-icon',
+    'Healthcare': 'healthcare-icon',
+    'Utilities': 'utilities-icon',
+    'Salary': 'salary-icon',
+    'Other': 'other-icon'
+  };
+  return styles[category] || 'other-icon';
+};
 </script>
 
 
@@ -227,7 +245,8 @@ const setTransactionType = (type) => {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -246,25 +265,25 @@ html, body {
   display: flex;
   background-color: var(--color-main);
   height: 100vh;
-  width: 100vw; /* Add this */
+  width: 100vw;
   overflow: hidden;
-  margin: 0; /* Add this */
-  padding: 0; /* Add this */
+  margin: 0;
+  padding: 0;
 }
 
 .side-menu {
-  flex: 0 0 20%; /* Don't grow, don't shrink, 20% width */
+  flex: 0 0 20%;
   min-width: 250px;
   background-color: var(--color-main);
   padding: 40px 0 40px 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow-y: auto; /* Allow sidebar to scroll if content is too long */
+  overflow-y: auto;
 }
 
 .main-content {
-  flex: 1; /* Take remaining space */
+  flex: 1;
   background-color: var(--color-main);
   padding: 40px;
   overflow: hidden;
@@ -580,7 +599,151 @@ html, body {
   gap: 15px;
 }
 
+/* No transactions message */
+.no-transactions {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 40px 20px;
+}
+
+.no-transactions p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Transaction icon styling */
 .transaction-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  /* Prevent icon from shrinking */
+}
+
+/* SVG icon styling */
+.category-svg {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+  /* Make SVG white */
+}
+
+/* Category-specific icon colors */
+.food-icon {
+  background: #ff9800;
+}
+
+.transport-icon {
+  background: #2196f3;
+}
+
+.shopping-icon {
+  background: #e91e63;
+}
+
+.education-icon {
+  background: #9c27b0;
+}
+
+.housing-icon {
+  background: #795548;
+}
+
+.entertainment-icon {
+  background: #ff5722;
+}
+
+.healthcare-icon {
+  background: #f44336;
+}
+
+.utilities-icon {
+  background: #ffeb3b;
+}
+
+.utilities-icon .category-svg {
+  filter: brightness(0);
+  /* Make utilities icon black instead of white */
+}
+
+.salary-icon {
+  background: var(--color-charts);
+}
+
+.freelance-icon {
+  background: #607d8b;
+}
+
+.investment-icon {
+  background: #4caf50;
+}
+
+.other-icon {
+  background: #9e9e9e;
+}
+
+/* Transaction details styling */
+.transaction-details {
+  flex: 1;
+  min-width: 0;
+  /* Allow text to wrap */
+}
+
+.transaction-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transaction-date {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Transaction amount styling */
+.transaction-amount {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.income-amount {
+  color: var(--color-charts);
+}
+
+.expense-amount {
+  color: #f44336;
+}
+
+/* Transaction item layout */
+.transaction-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+
+/* .transaction-icon {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -633,6 +796,5 @@ html, body {
 
 .expense-amount {
   color: #f44336;
-}
-
+} */
 </style>
