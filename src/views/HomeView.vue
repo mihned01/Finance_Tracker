@@ -217,22 +217,6 @@ waapi.animate('.connector', {
 });
 
 
-onMounted(() => {
-  const featureBoxes = document.querySelectorAll('.feature-box')
-
-  featureBoxes.forEach(box => {
-    box.addEventListener('mouseenter', () => {
-      box.style.transform = 'scale(1.03)'
-      box.style.transition = 'transform 0.3s ease'
-      box.style.boxShadow = '0 3px 12px rgba(0, 0, 0, 0.1)'
-    })
-
-    box.addEventListener('mouseleave', () => {
-      box.style.transform = 'scale(1)'
-      box.style.boxShadow = 'none'
-    })
-  })
-})
 
 </script>
 
@@ -641,7 +625,13 @@ onMounted(() => {
   margin: 0 0 40px 0;
 
 }
+/* Add this hover effect for feature boxes */
+.feature-box:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  transform: scale(1.01);
+}
 
+/* You can also remove the JavaScript hover effects since CSS handles it better */
 .feature-box {
   background: rgba(128, 255, 206, 0.5);
   border: 0.1px solid #2d2d2d;
@@ -650,8 +640,8 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add this transition */
 }
-
 
 .feature-box-top {
   padding: 30px 30px 0 30px;
@@ -688,6 +678,8 @@ onMounted(() => {
   height: 100%;
   object-fit: contain;
 }
+
+
 
 /* SECURITY SECTION */
 .security-section {
@@ -927,6 +919,8 @@ onMounted(() => {
 .security-bottom-left:hover,
 .security-bottom-right:hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  transform: scale(1.01);
+
 }
 
 /* FOOTER SECTION */
