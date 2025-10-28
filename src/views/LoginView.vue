@@ -41,9 +41,6 @@
             <h1>Registration</h1>
             <form @submit.prevent="registerUser">
               <div class="input-group">
-                <input type="email" v-model="regEmail" placeholder="Username" required>
-              </div>
-              <div class="input-group">
                 <input type="email" v-model="regEmail" placeholder="Email" required>
               </div>
               <div class="input-group">
