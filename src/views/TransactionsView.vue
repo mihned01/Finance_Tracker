@@ -8,7 +8,7 @@
         </div>
         <div class="user-info">
           <h2>{{ currentUser?.email }}</h2>
-          <p>Balance: DK 10.000,00</p>
+          <p>Balance: DK {{ balance.toFixed(2) }}</p>
         </div>
       </div>
 
@@ -51,7 +51,7 @@
           <div class="header">
             <div class="stat-card">
               <p class="stat-label">Total transactions</p>
-              <p class="stat-number">265</p>
+              <p class="stat-number">{{ transactions.length }}</p>
               <div class="stat-trend">
                 <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
               </div>
@@ -59,7 +59,7 @@
 
             <div class="stat-card expenses">
               <p class="stat-label">Expenses</p>
-              <p class="stat-number">4727</p>
+              <p class="stat-number">DK {{ totalExpenses.toFixed(2) }}</p>
               <p class="stat-subtitle">5% more than previous month</p>
               <div class="stat-trend">
                 <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
@@ -68,7 +68,7 @@
 
             <div class="stat-card income">
               <p class="stat-label">Income</p>
-              <p class="stat-number">DK 15,000</p>
+              <p class="stat-number">DK {{ totalIncome.toFixed(2) }}</p>
               <p class="stat-subtitle">5% less than previous month</p>
               <div class="stat-trend">
                 <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
