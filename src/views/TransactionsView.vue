@@ -84,7 +84,7 @@
           <div class="add-transaction-form">
             <h3>Add Transaction</h3>
 
-        
+
             <div class="form-group">
               <label>Amount</label>
               <input type="number" placeholder="0.00" class="amount-input" v-model="newTransaction.amount" step="0.01"
@@ -129,8 +129,7 @@
           <div class="history-card">
             <div class="history-header">
               <h3>Recent Transactions</h3>
-              <button class="static-theme" @click="navigateToCategories">View All</button>
-            </div>
+              <button class="static-theme" @click="viewAllTransactions">View All</button>            </div>
 
             <div class="transaction-list">
               <!-- Show message if no transactions -->
@@ -153,16 +152,60 @@
             </div>
           </div>
 
+          </div>
+
+
+
+          <div class="all-transactions-container" ref="allTransactionsRef">
+
+            <h3>All Transactions</h3>
+
+            <!-- Transaction Cards -->
+            <div class="transactions-list" v-if="transactions.length > 0">
+              <div v-for="transaction in transactions" :key="transaction.id" class="transaction-card">
+                <!-- Transaction Icon -->
+                <div class="transaction-icon" :class="getCategoryStyle(transaction.category)">
+                  <img :src="getCategoryIcon(transaction.category)" :alt="transaction.category" class="category-svg">
+                </div>
+
+                <!-- Transaction Details -->
+                <div class="transaction-details">
+                  <div class="transaction-info">
+                    <h4 class="transaction-category">{{ transaction.category }}</h4>
+                    <p class="transaction-description">{{ transaction.description || 'No description' }}</p>
+                    <p class="transaction-datetime">{{ transaction.date }} at {{ transaction.time }}</p>
+                  </div>
+                </div>
+
+                <!-- Transaction Amount -->
+                <div class="transaction-amount"
+                  :class="transaction.type === 'income' ? 'income-amount' : 'expense-amount'">
+                  {{ transaction.type === 'income' ? '+' : '-' }}DK {{ Math.abs(transaction.amount).toFixed(2) }}
+                </div>
+
+                <!-- Delete Button (Optional) -->
+                <button @click="deleteTransaction(transaction.id)" class="delete-btn" title="Delete transaction">
+                  <img src="@/assets/icons/trash-can-solid-full.svg" alt="Delete" class="delete-icon">
+                </button>
+              </div>
+
+            </div>
+
+            <!-- No Transactions Message -->
+            <div v-else class="no-transactions">
+              <p>No transactions found</p>
+            </div>
+
+
+            <RouterView />
+          </div>
         </div>
-
-
-        <RouterView />
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/modules/useAuth'
 import { useTransactions } from '@/modules/useTransactions'
@@ -188,10 +231,19 @@ const handleLogout = async () => {
   router.push('/')
 }
 
-const navigateToCategories = () => {
-  router.push('/categories')
-}
 
+// Add ref for the all transactions section
+const allTransactionsRef = ref(null)
+
+
+const viewAllTransactions = () => {
+  if (allTransactionsRef.value) {
+    allTransactionsRef.value.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+}
 const setTransactionType = (type) => {
   newTransaction.value.type = type
 }
@@ -677,10 +729,6 @@ body {
   background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
 }
 
-.utilities-icon {
-  background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%);
-}
-
 .salary-icon {
   background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
 }
@@ -694,7 +742,8 @@ body {
 .travel-icon .category-svg,
 .salary-icon .category-svg,
 .other-icon .category-svg {
-  filter: brightness(0); /* Make these icons black for better contrast */
+  filter: brightness(0);
+  /* Make these icons black for better contrast */
 }
 
 /* Keep white icons for dark gradient backgrounds */
@@ -702,9 +751,9 @@ body {
 .shopping-icon .category-svg,
 .housing-icon .category-svg,
 .education-icon .category-svg,
-.healthcare-icon .category-svg,
-.utilities-icon .category-svg {
-  filter: brightness(0) invert(1); /* Keep these icons white */
+.healthcare-icon .category-svg {
+  filter: brightness(0) invert(1);
+  /* Keep these icons white */
 }
 
 /* Transaction details styling */
@@ -762,4 +811,227 @@ body {
   border-bottom: none;
 }
 
+.all-transactions-container {
+  background: var(--color-background);
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  margin: 30px 0 0 0;
+  padding: 25px;
+}
+
+.all-transactions-container h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--color-text);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Transaction Cards Styles */
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.transaction-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.transaction-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Transaction Icon */
+.transaction-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.transaction-icon .category-svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Category-specific icon colors */
+.housing-icon {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.transport-icon {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.healthcare-icon {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+}
+
+.education-icon {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.salary-icon {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.food-icon {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+.shopping-icon {
+  background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+}
+
+.travel-icon {
+  background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
+}
+
+.utilities-icon {
+  background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%);
+}
+
+.other-icon {
+  background: linear-gradient(135deg, #9890e3 0%, #b1f4cf 100%);
+}
+
+/* Icon contrast adjustments */
+.housing-icon .category-svg,
+.salary-icon .category-svg,
+.healthcare-icon .category-svg,
+.education-icon .category-svg,
+.shopping-icon .category-svg,
+.utilities-icon .category-svg {
+  filter: brightness(0) invert(1);
+  /* White icons */
+}
+
+.transport-icon .category-svg,
+.food-icon .category-svg,
+.travel-icon .category-svg,
+.other-icon .category-svg {
+  filter: brightness(0);
+  /* Black icons */
+}
+
+/* Transaction Details */
+.transaction-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.transaction-category {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transaction-description {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  font-weight: 500;
+}
+
+.transaction-datetime {
+  font-size: 11px;
+  color: #999;
+  margin: 0;
+}
+
+/* Transaction Amount */
+.transaction-amount {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.income-amount {
+  color: var(--color-charts);
+}
+
+.expense-amount {
+  color: #f44336;
+}
+
+/* Delete Button */
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn:hover {
+  background-color: #ffebee;
+}
+
+.delete-icon {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(3180%) hue-rotate(346deg) brightness(91%) contrast(91%);
+}
+
+/* No Transactions */
+.no-transactions {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.no-transactions p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .transaction-card {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .transaction-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .transaction-description {
+    font-size: 13px;
+  }
+
+  .transaction-amount {
+    font-size: 13px;
+  }
+}
 </style>

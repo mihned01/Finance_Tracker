@@ -8,7 +8,7 @@
           <div class="green-section login">
 
             <button @click="goToHome" class="back-to-home-btn">
-              Back to Home
+              ← Back to Home
             </button>
 
 
@@ -52,7 +52,7 @@
 
           <div class="green-section register">
             <button @click="goToHome" class="back-to-home-btn-register">
-              Back to Home
+              ← Back to Home
             </button>
 
             <div class="green-content">

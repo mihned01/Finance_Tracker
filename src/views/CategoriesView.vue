@@ -545,7 +545,7 @@ body {
 }
 
 .card-content p {
-  font-size: 10px;
+  font-size: 12px;
   opacity: 0.9;
   margin-bottom: 1px;
 }
@@ -586,8 +586,8 @@ body {
 }
 
 .transport-card {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-  color: white;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  color: #333;
 }
 
 .education-card {
@@ -596,8 +596,8 @@ body {
 }
 
 .salary-card {
-  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-  color: #333;
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: white;
 }
 
 .food-card {
@@ -728,7 +728,7 @@ body {
 }
 
 .transport-icon {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
 }
 
 .healthcare-icon {
@@ -740,7 +740,7 @@ body {
 }
 
 .salary-icon {
-  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 }
 
 .food-icon {
@@ -765,7 +765,7 @@ body {
 
 /* Icon contrast adjustments */
 .housing-icon .category-svg,
-.transport-icon .category-svg,
+.salary-icon .category-svg,
 .healthcare-icon .category-svg,
 .education-icon .category-svg,
 .shopping-icon .category-svg,
@@ -773,7 +773,7 @@ body {
   filter: brightness(0) invert(1); /* White icons */
 }
 
-.salary-icon .category-svg,
+.transport-icon .category-svg,
 .food-icon .category-svg,
 .travel-icon .category-svg,
 .other-icon .category-svg {
