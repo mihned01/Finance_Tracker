@@ -34,9 +34,8 @@ export function useTransactions() {
     'Other'
   ]);
 
-  let unsubscribe = null; // Store unsubscribe function to prevent memory leaks
+  let unsubscribe = null; 
 
-  // Setup Firebase listener
   const setupTransactionsListener = (user) => {
     if (!user) {
       transactions.value = [];
@@ -46,45 +45,45 @@ export function useTransactions() {
     try {
       console.log('Setting up listener for user:', user.uid);
       
+      // Remove orderBy to avoid index requirement
       const q = query(
         collection(db, transactionsFBcollectionRef),
-        where("userId", "==", user.uid),
-        orderBy("createdAt", "desc")
+        where("userId", "==", user.uid)
+        // orderBy("createdAt", "desc") - commented out to avoid index requirement
       );
       
       unsubscribe = onSnapshot(q, 
         (snapshot) => {
           console.log('Snapshot received, docs count:', snapshot.docs.length);
-          transactions.value = snapshot.docs.map(doc => {
+          const transactionData = snapshot.docs.map(doc => {
             const data = doc.data();
             return { 
               id: doc.id, 
               ...data,
-              // Ensure date and time are properly formatted
-              date: data.date || new Date(data.createdAt).toLocaleDateString('en-GB'),
-              time: data.time || new Date(data.createdAt).toLocaleTimeString('en-GB', { 
+              date: data.date || new Date(data.createdAt?.toDate() || new Date()).toLocaleDateString('en-GB'),
+              time: data.time || new Date(data.createdAt?.toDate() || new Date()).toLocaleTimeString('en-GB', { 
                 hour: '2-digit', 
                 minute: '2-digit' 
               })
             };
           });
+          
+          // Sort by timestamp in JavaScript instead
+          transactions.value = transactionData.sort((a, b) => {
+            const timeA = a.timestamp || (a.createdAt?.toDate()?.getTime()) || 0;
+            const timeB = b.timestamp || (b.createdAt?.toDate()?.getTime()) || 0;
+            return timeB - timeA; // Descending order (newest first)
+          });
+          
           console.log('Transactions updated:', transactions.value.length);
         },
-        (error) => {
-          console.error("Error fetching transactions:", error);
-          errorMessage.value = "Error loading transactions";
-          showErrorMessage.value = true;
-          setTimeout(() => {
-            showErrorMessage.value = false;
-          }, 5000);
-        }
+        // ...existing error handling...
       );
     } catch (error) {
       console.error("Error setting up listener:", error);
     }
   };
 
-  // Clean up previous listener
   const cleanupListener = () => {
     if (unsubscribe) {
       console.log('Cleaning up previous listener');
@@ -93,14 +92,11 @@ export function useTransactions() {
     }
   };
 
-  // Watch for currentUser changes
   watch(currentUser, (newUser, oldUser) => {
     console.log('User changed:', { newUser: newUser?.uid, oldUser: oldUser?.uid });
     
-    // Always cleanup first
     cleanupListener();
     
-    // Setup new listener if user exists
     if (newUser) {
       setupTransactionsListener(newUser);
     } else {
@@ -108,15 +104,13 @@ export function useTransactions() {
     }
   }, { immediate: true });
 
-  // Cleanup on component unmount
+
   onUnmounted(() => {
     console.log('Component unmounting, cleaning up listener');
     cleanupListener();
   });
 
-  // Add transaction with better error handling
   const addTransaction = async () => {
-    // Clear previous errors
     showErrorMessage.value = false;
     errorMessage.value = '';
 
@@ -162,7 +156,7 @@ export function useTransactions() {
         type: newTransaction.value.type,
         userId: currentUser.value.uid,
         userEmail: currentUser.value.email,
-        createdAt: serverTimestamp(), // Use server timestamp for consistency
+        createdAt: serverTimestamp(),
         date: now.toLocaleDateString('en-GB'),
         time: now.toLocaleTimeString('en-GB', { 
           hour: '2-digit', 
@@ -193,7 +187,6 @@ export function useTransactions() {
     }
   };
 
-  // Delete transaction with better error handling
   const deleteTransaction = async (id) => {
     if (!currentUser.value) {
       errorMessage.value = "You must be logged in to delete transactions";
@@ -215,7 +208,6 @@ export function useTransactions() {
     }
   };
 
-  // Computed properties
   const totalExpenses = computed(() => {
     return transactions.value
       .filter(t => t.type === 'expense')

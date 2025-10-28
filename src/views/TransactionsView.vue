@@ -84,11 +84,7 @@
           <div class="add-transaction-form">
             <h3>Add Transaction</h3>
 
-            <!-- Error Message -->
-            <!-- <div v-if="showErrorMessage" class="error-message">
-              {{ errorMessage }}
-            </div> -->
-
+        
             <div class="form-group">
               <label>Amount</label>
               <input type="number" placeholder="0.00" class="amount-input" v-model="newTransaction.amount" step="0.01"
@@ -142,7 +138,6 @@
                 <p>No transactions yet. Add your first transaction!</p>
               </div>
 
-              <!-- Loop through actual transactions -->
               <div v-for="transaction in recentTransactions" :key="transaction.id" class="transaction-item">
                 <div class="transaction-icon" :class="getCategoryStyle(transaction.category)">
                   <img :src="getCategoryIcon(transaction.category)" :alt="transaction.category" class="category-svg">
@@ -446,7 +441,6 @@ body {
   display: grid;
   grid-template-columns: 1.7fr 1.3fr;
   gap: 30px;
-  margin-bottom: 30px;
 }
 
 /* Add Transaction Form */

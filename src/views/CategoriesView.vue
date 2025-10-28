@@ -159,11 +159,11 @@ const categoryStats = computed(() => {
       count: categoryTransactions.length,
       amount: totalAmount
     }
-  }) // Remove the .filter() to show all categories regardless of transaction count
+  }) 
 })
 
 
-// Mock percentages for demo
+
 const expensePercentage = computed(() => 15)
 const incomePercentage = computed(() => 5)
 
@@ -198,7 +198,6 @@ const getCategoryClass = (category) => {
 </script>
 
 <style scoped>
-/* Base styles (keep existing) */
 * {
   margin: 0;
   padding: 0;
@@ -260,7 +259,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Keep existing side menu styles */
 .user-profile {
   margin-bottom: 2rem;
 }
@@ -473,16 +471,15 @@ body {
   margin-top: 2px;
 }
 
-/* Force more columns on larger screens */
 @media (min-width: 1400px) {
   .categories-grid {
-    grid-template-columns: repeat(5, 1fr); /* 5 columns on very large screens */
+    grid-template-columns: repeat(5, 1fr); 
   }
 }
 
 @media (min-width: 1200px) {
   .categories-grid {
-    grid-template-columns: repeat(4, 1fr); /* 4 columns on large screens */
+    grid-template-columns: repeat(4, 1fr); 
   }
 }
 
@@ -539,7 +536,6 @@ body {
 }
 
 
-/* Dark cards text adjustments */
 .salary-card .category-svg,
 .food-card .category-svg,
 .entertainment-card .category-svg {
@@ -552,7 +548,6 @@ body {
   background: rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive design */
 @media (max-width: 1200px) {
   .categories-grid {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
