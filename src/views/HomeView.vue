@@ -261,7 +261,7 @@ waapi.animate('.connector', {
 
 .hero-left h1 {
   font-size: 32px;
-  font-family: Poppins, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: bold;
   color: var(--color-text);
   align-items: center;
@@ -419,15 +419,15 @@ waapi.animate('.connector', {
 }
 
 .balance-left h2 {
-  font-size: 20px;
-  font-family: Poppins, sans-serif;
+  font-size: 24px;
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   color: var(--color-text);
 }
 
 .balance-left p {
   font-size: 16px;
-  font-family: Poppins, sans-serif;
+  font-family: "Poppins", sans-serif;
   color: var(--color-text);
 }
 
@@ -511,7 +511,7 @@ waapi.animate('.connector', {
 
 .process-section h2 {
   font-size: 32px;
-  font-family: Poppins, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: bold;
   color: var(--color-text);
   text-align: center;
@@ -602,7 +602,7 @@ waapi.animate('.connector', {
 
 .features-section h2 {
   font-size: 32px;
-  font-family: Poppins, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: bold;
   color: var(--color-text);
   text-align: center;
@@ -610,7 +610,7 @@ waapi.animate('.connector', {
 
 .features-section p {
   font-size: 18px;
-  font-family: Poppins, sans-serif;
+  font-family: "Poppins", sans-serif;
   color: var(--color-text);
   width: 60%;
   text-align: center;
@@ -649,7 +649,7 @@ waapi.animate('.connector', {
 
 .feature-box-top h3 {
   font-size: 20px;
-  font-family: Poppins, sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 15px;
@@ -658,7 +658,7 @@ waapi.animate('.connector', {
 .feature-box-top p {
   width: 100%;
   font-size: 16px;
-  font-family: Poppins, sans-serif;
+  font-family: "Poppins", sans-serif;
   text-align: start;
   color: var(--color-text);
   font-weight: 400;
@@ -694,7 +694,7 @@ waapi.animate('.connector', {
 
 .security-section h2 {
   font-size: 32px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: bold;
   color: var(--color-text);
   text-align: center;
@@ -702,7 +702,7 @@ waapi.animate('.connector', {
 
 .security-section p {
   font-size: 18px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: var(--color-text);
   width: 60%;
   text-align: center;
@@ -739,7 +739,7 @@ waapi.animate('.connector', {
 
 .security-top-left-text h3 {
   font-size: 20px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 15px;
@@ -748,7 +748,7 @@ waapi.animate('.connector', {
 .security-top-left-text p {
   width: 100%;
   font-size: 16px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: start;
   color: var(--color-text);
   font-weight: 400;
@@ -788,7 +788,7 @@ waapi.animate('.connector', {
 
 .security-top-right-text h3 {
   font-size: 20px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 15px;
@@ -797,7 +797,7 @@ waapi.animate('.connector', {
 .security-top-right-text p {
   width: 100%;
   font-size: 16px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: start;
   color: var(--color-text);
   font-weight: 400;
@@ -836,7 +836,7 @@ waapi.animate('.connector', {
 
 .security-bottom-left-text h3 {
   font-size: 20px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 15px;
@@ -845,7 +845,7 @@ waapi.animate('.connector', {
 .security-bottom-left-text p {
   width: 100%;
   font-size: 16px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: start;
   color: var(--color-text);
   font-weight: 400;
@@ -883,7 +883,7 @@ waapi.animate('.connector', {
 
 .security-bottom-right-text h3 {
   font-size: 20px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 15px;
@@ -892,7 +892,7 @@ waapi.animate('.connector', {
 .security-bottom-right-text p {
   width: 100%;
   font-size: 16px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: start;
   color: var(--color-text);
   font-weight: 400;
@@ -937,7 +937,7 @@ waapi.animate('.connector', {
 }
 
 .footer-section p {
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   font-weight: 500;
   color: var(--color-text);

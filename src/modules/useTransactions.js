@@ -22,14 +22,13 @@ export function useTransactions() {
   const isLoading = ref(false);
   
   const categories = ref([
-    'Food & Drinks',
-    'Transport', 
-    'Shopping',
-    'Education',
-    'Housing',
-    'Entertainment',
+    'Rent & Bills',
+    'Transport',
     'Healthcare',
-    'Utilities',
+    'Food & Drinks',
+    'Education',
+    'Shopping',
+    'Travel',
     'Salary',
     'Other'
   ]);

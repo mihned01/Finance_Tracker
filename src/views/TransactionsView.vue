@@ -52,7 +52,7 @@
             <div class="stat-card">
               <p class="stat-label">Total transactions</p>
               <p class="stat-number">{{ transactions.length }}</p>
-              <div class="stat-trend">
+              <div class="stat-trend-t">
                 <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
               </div>
             </div>
@@ -203,10 +203,9 @@ const getCategoryIcon = (category) => {
     'Transport': '/src/assets/icons/car-solid-full.svg',
     'Shopping': '/src/assets/icons/bag-shopping-solid-full.svg',
     'Education': '/src/assets/icons/book-open-solid-full.svg',
-    'Housing': '/src/assets/icons/house-solid-full.svg',
+    'Rent & Bills': '/src/assets/icons/bolt-solid-full.svg',
     'Travel': 'src/assets/icons/plane-solid-full.svg',
     'Healthcare': '/src/assets/icons/heart-pulse-solid-full.svg',
-    'Utilities': '/src/assets/icons/bolt-solid-full.svg',
     'Salary': '/src/assets/icons/dollar-sign-solid-full.svg',
     'Other': '/src/assets/icons/category.svg'
   };
@@ -220,10 +219,9 @@ const getCategoryStyle = (category) => {
     'Transport': 'transport-icon',
     'Shopping': 'shopping-icon',
     'Education': 'education-icon',
-    'Housing': 'housing-icon',
+    'Rent & Bills': 'housing-icon',
     'Travel': 'travel-icon',
     'Healthcare': 'healthcare-icon',
-    'Utilities': 'utilities-icon',
     'Salary': 'salary-icon',
     'Other': 'other-icon'
   };
@@ -309,7 +307,7 @@ body {
 }
 
 .user-info h2 {
-  font: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 18px;
   margin-bottom: 0.5rem;
 }
@@ -382,10 +380,11 @@ body {
 
 .stat-card {
   background: var(--color-background);
+  width: fit-content;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 20px;
-  min-width: 160px;
+  min-width: 190px;
   position: relative;
 }
 
@@ -402,7 +401,7 @@ body {
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 14px;
   margin: 0 0 8px 0;
   opacity: 0.8;
 }
@@ -425,7 +424,6 @@ body {
   right: 15px;
   width: 30px;
   height: 30px;
-  background: rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -433,8 +431,31 @@ body {
 }
 
 .stat-trend img {
-  width: 16px;
-  height: 16px;
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) saturate(100%) invert(100%);
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.stat-trend-t {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-trend-t img {
+  width: 30px;
+  height: 30px;
+  color: black;
+  padding: 4px;
+  border-radius: 4px;
 }
 
 .content-grid {
@@ -454,7 +475,7 @@ body {
 .add-transaction-form h3 {
   color: var(--color-text);
   font-size: 20px;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   margin: 0 0 20px 0;
 }
@@ -627,58 +648,63 @@ body {
   /* Make SVG white */
 }
 
-/* Category-specific icon colors */
+/* Category-specific icon colors - Updated to match CategoriesView */
 .food-icon {
-  background: #ff9800;
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
 }
 
 .transport-icon {
-  background: #2196f3;
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 }
 
 .shopping-icon {
-  background: #e91e63;
+  background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
 }
 
-.education-icon {
-  background: #9c27b0;
+.travel-icon {
+  background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
 }
 
 .housing-icon {
-  background: #795548;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
 
-.entertainment-icon {
-  background: #ff5722;
+.education-icon {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
 }
 
 .healthcare-icon {
-  background: #f44336;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
 }
 
 .utilities-icon {
-  background: #ffeb3b;
-}
-
-.utilities-icon .category-svg {
-  filter: brightness(0);
-  /* Make utilities icon black instead of white */
+  background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%);
 }
 
 .salary-icon {
-  background: var(--color-charts);
-}
-
-.freelance-icon {
-  background: #607d8b;
-}
-
-.investment-icon {
-  background: #4caf50;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
 }
 
 .other-icon {
-  background: #9e9e9e;
+  background: linear-gradient(135deg, #9890e3 0%, #b1f4cf 100%);
+}
+
+/* Adjust SVG icon colors for light gradient backgrounds */
+.food-icon .category-svg,
+.travel-icon .category-svg,
+.salary-icon .category-svg,
+.other-icon .category-svg {
+  filter: brightness(0); /* Make these icons black for better contrast */
+}
+
+/* Keep white icons for dark gradient backgrounds */
+.transport-icon .category-svg,
+.shopping-icon .category-svg,
+.housing-icon .category-svg,
+.education-icon .category-svg,
+.healthcare-icon .category-svg,
+.utilities-icon .category-svg {
+  filter: brightness(0) invert(1); /* Keep these icons white */
 }
 
 /* Transaction details styling */
@@ -736,59 +762,4 @@ body {
   border-bottom: none;
 }
 
-
-/* .transaction-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-}
-
-.income-icon {
-  background: var(--color-charts);
-  color: white;
-}
-
-.food-icon {
-  background: #ff9800;
-  color: white;
-}
-
-.education-icon {
-  background: #9c27b0;
-  color: white;
-}
-
-.transaction-details {
-  flex: 1;
-}
-
-.transaction-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text);
-  margin: 0 0 4px 0;
-}
-
-.transaction-date {
-  font-size: 12px;
-  color: #666;
-  margin: 0;
-}
-
-.transaction-amount {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.income-amount {
-  color: var(--color-charts);
-}
-
-.expense-amount {
-  color: #f44336;
-} */
 </style>
