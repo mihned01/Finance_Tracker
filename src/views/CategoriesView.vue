@@ -147,17 +147,20 @@
 
             </div>
 
-   <!-- No Transactions Message -->
+       <!-- No Transactions Message -->
             <div v-else class="no-transactions">
               <p>No transactions found</p>
             </div>
 
-
+            
           </div>
+
+          
         </div>
       </div>
     </div>
   </div>
+  
 </template>
 
 <script setup>
@@ -509,7 +512,7 @@ body {
 .category-card {
   background: white;
   border-radius: 10px;
-  padding: 15px;
+  padding: 10px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -521,8 +524,8 @@ body {
 }
 
 .card-icon {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   display: flex;
@@ -532,8 +535,8 @@ body {
 }
 
 .category-svg {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   filter: brightness(0) invert(1);
 }
 
@@ -569,7 +572,7 @@ body {
 }
 
 .category-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
@@ -825,7 +828,7 @@ body {
 }
 
 .income-amount {
-  color: var(--color-charts);
+  color: #06D143;
 }
 
 .expense-amount {

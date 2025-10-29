@@ -22,7 +22,7 @@
             <h1>Login</h1>
             <form @submit.prevent="loginUser">
               <div class="input-group">
-                <input type="email" v-model="email" placeholder="Username" required>
+                <input type="email" v-model="email" placeholder="Email" required>
               </div>
               <div class="input-group">
                 <input type="password" v-model="password" placeholder="Password" required>

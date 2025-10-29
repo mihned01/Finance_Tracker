@@ -8,7 +8,7 @@
         </div>
         <div class="user-info">
           <h2>{{ currentUser?.email }}</h2>
-          <p>Balance: DK 10.000,00</p>
+          <p>Balance: DK {{ balance.toFixed(2) }}</p>
         </div>
       </div>
 
@@ -46,36 +46,36 @@
     <div class="main-content">
       <div class="main-content-container">
         <!-- Header Section -->
-        <div class="transactions-header">
+        <div class="statistics-header">
 
-          <div class="header">
-            <div class="stat-card">
-              <p class="stat-label">Total transactions</p>
-              <p class="stat-number">265</p>
-              <div class="stat-trend">
-                <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
-              </div>
-            </div>
+<div class="header">
+  <div class="stat-card">
+    <p class="stat-label">Total transactions</p>
+    <p class="stat-number">{{ transactions.length }}</p>
+    <div class="stat-trend-t">
+      <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
+    </div>
+  </div>
 
-            <div class="stat-card expenses">
-              <p class="stat-label">Expenses</p>
-              <p class="stat-number"></p>
-              <p class="stat-subtitle">5% more than previous month</p>
-              <div class="stat-trend">
-                <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
-              </div>
-            </div>
+  <div class="stat-card expenses">
+    <p class="stat-label">Expenses</p>
+    <p class="stat-number">DK {{ totalExpenses.toFixed(2) }}</p>
+    <p class="stat-subtitle">5% more than previous month</p>
+    <div class="stat-trend">
+      <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
+    </div>
+  </div>
 
-            <div class="stat-card income">
-              <p class="stat-label">Income</p>
-              <p class="stat-number">DK 15,000</p>
-              <p class="stat-subtitle">5% less than previous month</p>
-              <div class="stat-trend">
-                <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="stat-card income">
+    <p class="stat-label">Income</p>
+    <p class="stat-number">DK {{ totalIncome.toFixed(2) }}</p>
+    <p class="stat-subtitle">5% less than previous month</p>
+    <div class="stat-trend">
+      <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
+    </div>
+  </div>
+</div>
+</div>
 
 
         <!-- Main Content Area -->
@@ -197,7 +197,8 @@ const setTransactionType = (type) => {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -216,25 +217,25 @@ html, body {
   display: flex;
   background-color: var(--color-main);
   height: 100vh;
-  width: 100vw; /* Add this */
+  width: 100vw;
   overflow: hidden;
-  margin: 0; /* Add this */
-  padding: 0; /* Add this */
+  margin: 0;
+  padding: 0;
 }
 
 .side-menu {
-  flex: 0 0 20%; /* Don't grow, don't shrink, 20% width */
+  flex: 0 0 20%;
   min-width: 250px;
   background-color: var(--color-main);
   padding: 40px 0 40px 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow-y: auto; /* Allow sidebar to scroll if content is too long */
+  overflow-y: auto;
 }
 
 .main-content {
-  flex: 1; /* Take remaining space */
+  flex: 1;
   background-color: var(--color-main);
   padding: 40px;
   overflow: hidden;
@@ -265,7 +266,7 @@ html, body {
 }
 
 .user-info h2 {
-  font: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 18px;
   margin-bottom: 0.5rem;
 }
@@ -322,7 +323,7 @@ html, body {
   font-size: 1rem;
 }
 
-.transactions-header {
+.dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -330,7 +331,6 @@ html, body {
   gap: 20px;
 }
 
-/* Header cards */
 
 .header {
   display: flex;
@@ -339,10 +339,11 @@ html, body {
 
 .stat-card {
   background: var(--color-background);
+  width: fit-content;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 20px;
-  min-width: 160px;
+  min-width: 190px;
   position: relative;
 }
 
@@ -359,7 +360,7 @@ html, body {
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 14px;
   margin: 0 0 8px 0;
   opacity: 0.8;
 }
@@ -382,7 +383,6 @@ html, body {
   right: 15px;
   width: 30px;
   height: 30px;
-  background: rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -390,15 +390,38 @@ html, body {
 }
 
 .stat-trend img {
-  width: 16px;
-  height: 16px;
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) saturate(100%) invert(100%);
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.stat-trend-t {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-trend-t img {
+  width: 30px;
+  height: 30px;
+  color: black;
+  padding: 4px;
+  border-radius: 4px;
 }
 
 .content-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1.7fr 1.3fr;
   gap: 30px;
-  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
 
