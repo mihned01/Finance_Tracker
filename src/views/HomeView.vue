@@ -254,7 +254,7 @@ body {
 }
 
 .hero-container {
-  height: 75vh;
+  height: 80vh;
   margin: 10px 40px 10px 40px;
   display: flex;
   flex-direction: column;
@@ -264,7 +264,7 @@ body {
 
 .hero {
   width: 100%;
-  height: 70vh;
+  height: 75vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -289,6 +289,7 @@ body {
   font-weight: bold;
   color: var(--color-text);
   align-items: center;
+  line-height: 1.2;
 }
 
 .hero-left p {
@@ -297,6 +298,7 @@ body {
   color: var(--color-text);
   margin: 10px 0 20px 0;
   align-items: center;
+  line-height: 1.5;
 }
 
 .hero-left button {
@@ -648,13 +650,9 @@ body {
   justify-content: space-between;
   align-items: stretch;
   margin: 0 0 40px 0;
+  gap: 20px;
+}
 
-}
-/* Add this hover effect for feature boxes */
-.feature-box:hover {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-  transform: scale(1.01);
-}
 
 /* You can also remove the JavaScript hover effects since CSS handles it better */
 .feature-box {
@@ -666,6 +664,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add this transition */
+}
+
+.feature-box:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  transform: scale(1.01);
 }
 
 .feature-box-top {
@@ -988,4 +991,194 @@ body {
     border-color: #000000 !important;
   }
 }
+
+
+
+/* Large desktop screens */
+@media (min-width: 1440px) {
+  .hero-container {
+    margin: 20px 120px;
+    height: 80vh;
+  }
+  
+  .hero {
+    height: 75vh;
+    padding: 0 8%;
+    border-radius: 30px;
+  }
+  
+  .hero-left h1 {
+    font-size: 44px;
+  }
+  
+  .hero-left p {
+    font-size: 22px;
+    margin: 20px 0 30px 0;
+  }
+  
+  .hero-left button {
+    padding: 16px 35px;
+    font-size: 18px;
+  }
+  
+  .transaction-card {
+    max-width: 520px;
+  }
+
+  .transaction-item {
+    padding: 20px;
+  }
+
+  .transaction-item p {
+    font-size: 14px;
+  }
+
+  .balance-card {
+    padding: 30px;
+  }
+
+  .balance-left h2 {
+    font-size: 28px;
+  }
+
+  .balance {
+    font-size: 28px;
+  }
+  
+  /* Process Section */
+  .process-section {
+    margin: 20px 140px;
+  }
+  
+  .process-section h2 {
+    font-size: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .steps-section {
+    width: 100%;
+    margin: 80px 0;
+  }
+  
+  .step-one,
+  .step-two,
+  .step-three {
+    height: 180px;
+    width: 180px;
+    margin-bottom: 30px;
+  }
+  
+  .step p {
+    font-size: 22px;
+  }
+  
+  .connector {
+    max-width: 250px;
+  }
+  
+  /* Features Section */
+  .features-section {
+    margin: 20px 140px;
+  }
+  
+  .features-section h2 {
+    font-size: 40px;
+  }
+  
+  .features-section > p {
+    font-size: 22px;
+    width: 60%;
+    margin-bottom: 60px;
+  }
+  
+  .features-container {
+    gap: 40px;
+    margin: 0 0 60px 0;
+  }
+  
+  .feature-box-top {
+    padding: 50px 50px 0 50px;
+  }
+  
+  .feature-box-top h3 {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .feature-box-top p {
+    font-size: 18px;
+  }
+  
+  .feature-box-bottom {
+    padding: 0 50px 50px 50px;
+  }
+  
+  /* Security Section */
+  .security-section {
+    margin: 20px 140px 40px 140px;
+  }
+  
+  .security-section h2 {
+    font-size: 40px;
+  }
+  
+  .security-section > p {
+    font-size: 22px;
+    width: 60%;
+    margin-bottom: 60px;
+  }
+  
+  .security-top,
+  .security-bottom {
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .security-top-left,
+  .security-top-right,
+  .security-bottom-left,
+  .security-bottom-right {
+    height: 340px;
+  }
+  
+  .security-top-left-text,
+  .security-top-right-text,
+  .security-bottom-left-text,
+  .security-bottom-right-text {
+    margin: 50px 0 50px 50px;
+  }
+  
+  .security-top-left-text h3,
+  .security-top-right-text h3,
+  .security-bottom-left-text h3,
+  .security-bottom-right-text h3 {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .security-top-left-text p,
+  .security-top-right-text p,
+  .security-bottom-left-text p,
+  .security-bottom-right-text p {
+    font-size: 18px;
+  }
+  
+  .security-top-left-icon,
+  .security-top-right-icon,
+  .security-bottom-left-icon,
+  .security-bottom-right-icon {
+    margin: 50px 50px 50px 0;
+  }
+
+  .connector {
+    flex: 1;
+    height: 2px;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cline x1='0' y1='0' x2='100%25' y2='0' stroke='%23666666' stroke-width='3' stroke-dasharray='10%2c10'/%3e%3c/svg%3e");
+    max-width: 280px;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+
 </style>
