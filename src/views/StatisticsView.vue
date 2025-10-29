@@ -4,7 +4,7 @@
     <div class="side-menu">
       <div class="user-profile">
         <div class="profile-image">
-          <img src="@/assets/icons/user-solid.svg" alt="Profile">
+          <img src="@/assets/icons/user-solid.svg" alt="User Profile">
         </div>
         <div class="user-info">
           <h2>{{ currentUser?.email }}</h2>
@@ -14,19 +14,19 @@
 
       <nav class="menu-items">
         <RouterLink to="/dashboard" class="menu-item">
-          <img src="@/assets/icons/house-regular-full.svg" alt="Profile">
+          <img src="@/assets/icons/house-regular-full.svg" alt="Dashboard">
           Dashboard
         </RouterLink>
         <RouterLink to="/transactions" class="menu-item">
-          <img src="@/assets/icons/arrow-right-arrow-left-solid-full.svg" alt="Profile">
+          <img src="@/assets/icons/arrow-right-arrow-left-solid-full.svg" alt="Transactions">
           Transactions
         </RouterLink>
         <RouterLink to="/categories" class="menu-item">
-          <img src="@/assets/icons/category.svg" alt="Profile">
+          <img src="@/assets/icons/category.svg" alt="Categories">
           Categories
         </RouterLink>
         <RouterLink to="/statistics" class="menu-item">
-          <img src="@/assets/icons/chart-simple-solid-full.svg" alt="Profile">
+          <img src="@/assets/icons/chart-simple-solid-full.svg" alt="Statistics">
           Statistics
         </RouterLink>
       </nav>
@@ -37,7 +37,7 @@
           Profile
         </RouterLink>
         <button @click="handleLogout" class="menu-item logout">
-          <img src="@/assets/icons/arrow-right-from-bracket-solid-full.svg" alt="Profile">
+          <img src="@/assets/icons/arrow-right-from-bracket-solid-full.svg" alt="Log out">
           Log out
         </button>
       </div>
@@ -148,11 +148,6 @@
             </div>
           </div>
         </div>
-
-        
-
-
-        <RouterView />
       </div>
     </div>
   </div>
@@ -165,26 +160,11 @@ import { useTransactions } from '@/modules/useTransactions'
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()
-const {
-  transactions,
-  newTransaction,
-  categories,
-  errorMessage,
-  showErrorMessage,
-  addTransaction,
-  deleteTransaction,
-  totalExpenses,      // Change from getTotalExpenses
-  totalIncome,        // Change from getTotalIncome
-  balance             // Change from getBalance
-} = useTransactions()
+const { transactions, totalExpenses, totalIncome, balance } = useTransactions()
 
 const handleLogout = async () => {
   await logout()
   router.push('/')
-}
-
-const setTransactionType = (type) => {
-  newTransaction.value.type = type
 }
 </script>
 

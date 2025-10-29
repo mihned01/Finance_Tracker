@@ -2,11 +2,11 @@
   <div class="dashboard-container">
     <transactionLogForm ref="transactionFormRef" />
 
-    <!-- Side Menu (keep existing) -->
+    <!-- Side Menu -->
     <div class="side-menu">
       <div class="user-profile">
         <div class="profile-image">
-          <img src="@/assets/icons/user-solid.svg" alt="Profile">
+          <img src="@/assets/icons/user-solid.svg" alt="User Profile">
         </div>
         <div class="user-info">
           <h2>{{ currentUser?.email }}</h2>
@@ -90,7 +90,8 @@
 
           <div class="categories-grid">
             <!-- All Transactions Card -->
-            <div class="category-card all-card" @click="navigateToCategory('all')">
+            <div class="category-card all-card" :class="{ 'active-category': selectedCategory === 'all' }"
+              @click="navigateToCategory('all')">
               <div class="card-icon">
                 <img src="@/assets/icons/category.svg" alt="All" class="category-svg">
               </div>
@@ -102,7 +103,8 @@
 
             <!-- Category Cards -->
             <div v-for="category in categoryStats" :key="category.name" class="category-card"
-              :class="getCategoryClass(category.name)" @click="navigateToCategory(category.name)">
+              :class="[getCategoryClass(category.name), { 'active-category': selectedCategory === category.name }]"
+              @click="navigateToCategory(category.name)">
               <div class="card-icon">
                 <img :src="getCategoryIcon(category.name)" :alt="category.name" class="category-svg">
               </div>
@@ -116,12 +118,11 @@
 
           <div class="all-transactions-container">
 
-            <h3>All Transactions</h3>
+            <h3>{{ sectionTitle }}</h3>
 
-            <!-- Transaction Cards -->
-            <div class="transactions-list" v-if="transactions.length > 0">
-              <!-- Add @click="openTransactionModal(transaction)" here -->
-              <div v-for="transaction in transactions" :key="transaction.id" class="transaction-card"
+            <!-- Transaction Cards - Use filteredTransactions instead of transactions -->
+            <div class="transactions-list" v-if="filteredTransactions.length > 0">
+              <div v-for="transaction in filteredTransactions" :key="transaction.id" class="transaction-card"
                 @click="openTransactionModal(transaction)">
                 <!-- Transaction Icon -->
                 <div class="transaction-icon" :class="getCategoryStyle(transaction.category)">
@@ -143,33 +144,24 @@
                   {{ transaction.type === 'income' ? '+' : '-' }}DK {{ Math.abs(transaction.amount).toFixed(2) }}
                 </div>
 
-                <!-- Delete Button (Optional)
-                <button @click="deleteTransaction(transaction.id)" class="delete-btn" title="Delete transaction">
-                  <img src="@/assets/icons/trash-can-solid-full.svg" alt="Delete" class="delete-icon">
-                </button> -->
               </div>
 
             </div>
 
             <!-- No Transactions Message -->
             <div v-else class="no-transactions">
-              <p>No transactions found</p>
+              <p>No transactions found{{ selectedCategory !== 'all' ? ' for this category' : '' }}</p>
             </div>
-
-
 
             <!-- Transaction Modal -->
             <transactionLogForm :is-open="isModalOpen" :transaction="selectedTransaction" @close="closeModal"
               @save="handleTransactionSave" @delete="handleTransactionDelete" />
 
           </div>
-
-
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup>
@@ -188,6 +180,8 @@ const handleLogout = async () => {
   router.push('/')
 }
 
+// reactive state for selected category
+const selectedCategory = ref('all')
 
 // Computed properties for category statistics
 const categoryStats = computed(() => {
@@ -215,7 +209,23 @@ const categoryStats = computed(() => {
   })
 })
 
+// Computed property for filtered transactions
+const filteredTransactions = computed(() => {
+  if (selectedCategory.value === 'all') {
+    return transactions.value
+  }
+  return transactions.value.filter(transaction => transaction.category === selectedCategory.value)
+})
 
+// Computed property for section title
+const sectionTitle = computed(() => {
+  if (selectedCategory.value === 'all') {
+    return 'All Transactions'
+  }
+
+  const category = categoryStats.value.find(cat => cat.name === selectedCategory.value)
+  return category ? `${category.displayName} Transactions` : 'Transactions'
+})
 
 const expensePercentage = computed(() => 15)
 const incomePercentage = computed(() => 5)
@@ -266,9 +276,10 @@ const getCategoryStyle = (category) => {
   return styles[category] || 'other-icon'
 }
 
+// navigateToCategory function
 const navigateToCategory = (categoryName) => {
-  // You can implement navigation logic here
-  console.log('Navigate to category:', categoryName)
+  selectedCategory.value = categoryName
+  console.log('Selected category:', categoryName)
 }
 
 // Modal state
@@ -294,8 +305,9 @@ const handleTransactionDelete = (transactionId) => {
   console.log('Transaction deleted:', transactionId)
   // The real-time listener will update the UI automatically
 }
-
 </script>
+
+
 
 <style scoped>
 * {
@@ -539,7 +551,6 @@ body {
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  /* Very compact */
   gap: 10px;
 }
 
@@ -555,6 +566,22 @@ body {
   border: 2px solid transparent;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   min-height: 50px;
+}
+
+/* Active state styling */
+.category-card.active-category {
+  border: 2px solid var(--color-charts);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-card.active-category:hover {
+  border: 2px solid var(--color-charts);
 }
 
 .card-icon {
@@ -667,7 +694,6 @@ body {
   color: #333;
 }
 
-/* Adjust text color for light backgrounds */
 .salary-card .category-svg,
 .food-card .category-svg,
 .travel-card .category-svg,
@@ -904,26 +930,5 @@ body {
 .no-transactions p {
   font-size: 16px;
   margin: 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .transaction-card {
-    padding: 12px;
-    gap: 10px;
-  }
-
-  .transaction-icon {
-    width: 40px;
-    height: 40px;
-  }
-
-  .transaction-description {
-    font-size: 13px;
-  }
-
-  .transaction-amount {
-    font-size: 13px;
-  }
 }
 </style>

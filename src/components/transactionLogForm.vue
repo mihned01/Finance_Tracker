@@ -329,7 +329,7 @@ const getCategoryStyle = (category) => {
 }
 
 .amount-display-large {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -341,14 +341,14 @@ const getCategoryStyle = (category) => {
 }
 
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
 .form-group label {
     display: block;
     color: var(--color-text);
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     margin-bottom: 10px;
     font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
@@ -366,7 +366,7 @@ const getCategoryStyle = (category) => {
     border-radius: 12px;
     background: var(--color-background);
     color: var(--color-text);
-    font-size: 15px;
+    font-size: 14px;
     font-family: 'Poppins', sans-serif;
     transition: all 0.3s ease;
 }
@@ -379,7 +379,7 @@ const getCategoryStyle = (category) => {
 }
 
 .display-value {
-    font-size: 15px;
+    font-size: 18px;
     color: var(--color-text);
     margin: 0;
     padding: 14px 0;
@@ -393,7 +393,7 @@ const getCategoryStyle = (category) => {
 }
 
 .income-amount {
-    color: var(--color-charts);
+    color: #22c55e;
 }
 
 .expense-amount {

@@ -6,7 +6,7 @@
     <div class="side-menu">
       <div class="user-profile">
         <div class="profile-image">
-          <img src="@/assets/icons/user-solid.svg" alt="Profile">
+          <img src="@/assets/icons/user-solid.svg" alt="User Profile">
         </div>
         <div class="user-info">
           <h2>{{ currentUser?.email }}</h2>
@@ -16,19 +16,19 @@
 
       <nav class="menu-items">
         <RouterLink to="/dashboard" class="menu-item">
-          <img src="@/assets/icons/house-regular-full.svg" alt="Profile">
+          <img src="@/assets/icons/house-regular-full.svg" alt="Dashboard">
           Dashboard
         </RouterLink>
         <RouterLink to="/transactions" class="menu-item">
-          <img src="@/assets/icons/arrow-right-arrow-left-solid-full.svg" alt="Profile">
+          <img src="@/assets/icons/arrow-right-arrow-left-solid-full.svg" alt="Transactions">
           Transactions
         </RouterLink>
         <RouterLink to="/categories" class="menu-item">
-          <img src="@/assets/icons/category.svg" alt="Profile">
+          <img src="@/assets/icons/category.svg" alt="Categories">
           Categories
         </RouterLink>
         <RouterLink to="/statistics" class="menu-item">
-          <img src="@/assets/icons/chart-simple-solid-full.svg" alt="Profile">
+          <img src="@/assets/icons/chart-simple-solid-full.svg" alt="Statistics">
           Statistics
         </RouterLink>
       </nav>
@@ -39,7 +39,7 @@
           Profile
         </RouterLink>
         <button @click="handleLogout" class="menu-item logout">
-          <img src="@/assets/icons/arrow-right-from-bracket-solid-full.svg" alt="Profile">
+          <img src="@/assets/icons/arrow-right-from-bracket-solid-full.svg" alt="Log out">
           Log out
         </button>
       </div>
@@ -131,7 +131,8 @@
           <div class="history-card">
             <div class="history-header">
               <h3>Recent Transactions</h3>
-              <button class="static-theme" @click="viewAllTransactions">View All</button>            </div>
+              <button class="static-theme" @click="viewAllTransactions">View All</button>
+            </div>
 
             <div class="transaction-list">
               <!-- Show message if no transactions -->
@@ -154,65 +155,56 @@
             </div>
           </div>
 
+        </div>
+
+
+
+        <div class="all-transactions-container" ref="allTransactionsRef">
+
+          <h3>All Transactions</h3>
+
+          <!-- Transaction Cards -->
+          <div class="transactions-list" v-if="transactions.length > 0">
+            <div v-for="transaction in transactions" :key="transaction.id" class="transaction-card"
+              @click="openTransactionModal(transaction)">
+              <!-- Transaction Icon -->
+              <div class="transaction-icon" :class="getCategoryStyle(transaction.category)">
+                <img :src="getCategoryIcon(transaction.category)" :alt="transaction.category" class="category-svg">
+              </div>
+
+              <!-- Transaction Details -->
+              <div class="transaction-details">
+                <div class="transaction-info">
+                  <h4 class="transaction-category">{{ transaction.category }}</h4>
+                  <p class="transaction-description">{{ transaction.description || 'No description' }}</p>
+                  <p class="transaction-datetime">{{ transaction.date }} at {{ transaction.time }}</p>
+                </div>
+              </div>
+
+              <!-- Transaction Amount -->
+              <div class="transaction-amount"
+                :class="transaction.type === 'income' ? 'income-amount' : 'expense-amount'">
+                {{ transaction.type === 'income' ? '+' : '-' }}DK {{ Math.abs(transaction.amount).toFixed(2) }}
+              </div>
+
+            </div>
+          </div>
+
+          <!-- No Transactions Message -->
+          <div v-else class="no-transactions">
+            <p>No transactions found</p>
           </div>
 
 
+          <!-- Transaction Modal -->
+          <transactionLogForm :is-open="isModalOpen" :transaction="selectedTransaction" @close="closeModal"
+            @save="handleTransactionSave" @delete="handleTransactionDelete" />
 
-          <div class="all-transactions-container" ref="allTransactionsRef">
-
-            <h3>All Transactions</h3>
-
-            <!-- Transaction Cards -->
-            <div class="transactions-list" v-if="transactions.length > 0">
-              <div v-for="transaction in transactions" :key="transaction.id" class="transaction-card"@click="openTransactionModal(transaction)">
-                <!-- Transaction Icon -->
-                <div class="transaction-icon" :class="getCategoryStyle(transaction.category)">
-                  <img :src="getCategoryIcon(transaction.category)" :alt="transaction.category" class="category-svg">
-                </div>
-
-                <!-- Transaction Details -->
-                <div class="transaction-details">
-                  <div class="transaction-info">
-                    <h4 class="transaction-category">{{ transaction.category }}</h4>
-                    <p class="transaction-description">{{ transaction.description || 'No description' }}</p>
-                    <p class="transaction-datetime">{{ transaction.date }} at {{ transaction.time }}</p>
-                  </div>
-                </div>
-
-                <!-- Transaction Amount -->
-                <div class="transaction-amount"
-                  :class="transaction.type === 'income' ? 'income-amount' : 'expense-amount'">
-                  {{ transaction.type === 'income' ? '+' : '-' }}DK {{ Math.abs(transaction.amount).toFixed(2) }}
-                </div>
-
-                <!-- Delete Button (Optional)
-                <button @click="deleteTransaction(transaction.id)" class="delete-btn" title="Delete transaction">
-                  <img src="@/assets/icons/trash-can-solid-full.svg" alt="Delete" class="delete-icon">
-                </button>-->
-              </div> 
-
-            </div>
-
-            <!-- No Transactions Message -->
-            <div v-else class="no-transactions">
-              <p>No transactions found</p>
-            </div>
-
-
-    <!-- Transaction Modal -->
-    <transactionLogForm 
-      :is-open="isModalOpen" 
-      :transaction="selectedTransaction"
-      @close="closeModal"
-      @save="handleTransactionSave"
-      @delete="handleTransactionDelete"
-    />
-
-            <RouterView />
-          </div>
+          
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -243,14 +235,11 @@ const handleLogout = async () => {
   router.push('/')
 }
 
-
-// Add ref for the all transactions section
 const allTransactionsRef = ref(null)
-
 
 const viewAllTransactions = () => {
   if (allTransactionsRef.value) {
-    allTransactionsRef.value.scrollIntoView({ 
+    allTransactionsRef.value.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     });
@@ -292,7 +281,6 @@ const getCategoryStyle = (category) => {
   return styles[category] || 'other-icon';
 };
 
-
 // Modal state
 const isModalOpen = ref(false)
 const selectedTransaction = ref({})
@@ -307,14 +295,13 @@ const closeModal = () => {
   selectedTransaction.value = {}
 }
 
+// The real-time listener will update the UI automatically
 const handleTransactionSave = (updatedTransaction) => {
   console.log('Transaction saved:', updatedTransaction)
-  // The real-time listener will update the UI automatically
 }
 
 const handleTransactionDelete = (transactionId) => {
   console.log('Transaction deleted:', transactionId)
-  // The real-time listener will update the UI automatically
 }
 
 </script>
@@ -727,18 +714,15 @@ body {
   justify-content: center;
   font-size: 16px;
   flex-shrink: 0;
-  /* Prevent icon from shrinking */
 }
 
-/* SVG icon styling */
 .category-svg {
   width: 20px;
   height: 20px;
   filter: brightness(0) invert(1);
-  /* Make SVG white */
 }
 
-/* Category-specific icon colors - Updated to match CategoriesView */
+/* Category-specific icon colors */
 .food-icon {
   background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
 }
@@ -781,7 +765,6 @@ body {
 .salary-icon .category-svg,
 .other-icon .category-svg {
   filter: brightness(0);
-  /* Make these icons black for better contrast */
 }
 
 /* Keep white icons for dark gradient backgrounds */
@@ -791,14 +774,13 @@ body {
 .education-icon .category-svg,
 .healthcare-icon .category-svg {
   filter: brightness(0) invert(1);
-  /* Keep these icons white */
 }
+
 
 /* Transaction details styling */
 .transaction-details {
   flex: 1;
   min-width: 0;
-  /* Allow text to wrap */
 }
 
 .transaction-name {
@@ -876,10 +858,6 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.delete-btn {
-  display: none; /* Hide the inline delete button */
-}
-
 /* Transaction Icon */
 .transaction-icon {
   width: 45px;
@@ -945,7 +923,6 @@ body {
 .shopping-icon .category-svg,
 .utilities-icon .category-svg {
   filter: brightness(0) invert(1);
-  /* White icons */
 }
 
 .transport-icon .category-svg,
@@ -953,7 +930,6 @@ body {
 .travel-icon .category-svg,
 .other-icon .category-svg {
   filter: brightness(0);
-  /* Black icons */
 }
 
 /* Transaction Details */
@@ -1008,29 +984,6 @@ body {
   color: #f44336;
 }
 
-/* Delete Button */
-.delete-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.delete-btn:hover {
-  background-color: #ffebee;
-}
-
-.delete-icon {
-  width: 16px;
-  height: 16px;
-  filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(3180%) hue-rotate(346deg) brightness(91%) contrast(91%);
-}
-
 /* No Transactions */
 .no-transactions {
   text-align: center;
@@ -1041,26 +994,5 @@ body {
 .no-transactions p {
   font-size: 16px;
   margin: 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .transaction-card {
-    padding: 12px;
-    gap: 10px;
-  }
-
-  .transaction-icon {
-    width: 40px;
-    height: 40px;
-  }
-
-  .transaction-description {
-    font-size: 13px;
-  }
-
-  .transaction-amount {
-    font-size: 13px;
-  }
 }
 </style>
