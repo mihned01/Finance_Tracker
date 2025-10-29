@@ -1,5 +1,5 @@
 <template>
-    <div class="dashboard-container">
+  <div class="profile-container">
     <!-- Side Menu -->
     <div class="side-menu">
       <div class="user-profile">
@@ -7,8 +7,8 @@
           <img src="@/assets/icons/user-solid.svg" alt="User Profile">
         </div>
         <div class="user-info">
-          <h2>{{ currentUser?.email }}</h2>
-          <p>Balance: DK {{ balance.toFixed(2) }}</p>
+          <h2>{{ userDisplayName }}</h2>
+          <p>Balance: {{ formatCurrency(balance) }}</p>
         </div>
       </div>
 
@@ -45,60 +45,274 @@
 
     <div class="main-content">
       <div class="main-content-container">
-        <!-- Header Section -->
-      </div>
-    </div>
-
-    <!-- Profile Content -->
-    <div class="profile-content">
-          <h1>Profile</h1>
-          
-          <div class="profile-info">
-            <h3>Account Information</h3>
-            <div class="info-item">
-              <strong>Email:</strong> {{ currentUser?.email }}
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="header-left">
+            <div class="profile-avatar">
+              <img src="@/assets/icons/user-solid.svg" alt="Profile">
+              <button class="edit-avatar-btn" @click="editAvatar">
+                <img src="@/assets/icons/locket.png" alt="Edit">
+              </button>
             </div>
-            <div class="info-item">
-              <strong>Current Balance:</strong> DK {{ balance.toFixed(2) }}
-            </div>
-            <div class="info-item">
-              <strong>Total Transactions:</strong> {{ totalTransactions }}
+            <div class="header-info">
+              <h1>{{ userDisplayName }}</h1>
+              <p class="user-email">{{ currentUser?.email }}</p>
+              <div class="account-status">
+                <span class="status-badge active">Active Account</span>
+                <span class="join-date">Member since {{ joinDate }}</span>
+              </div>
             </div>
           </div>
-          
-          <div class="profile-section">
-            <h3>Account Settings</h3>
-            <p>Profile settings and account management features coming soon...</p>
+          <div class="header-actions">
+            <button class="action-btn primary" @click="editProfile">
+              <img src="@/assets/icons/locket.png" alt="Edit">
+              Edit Profile
+            </button>
+            <button class="action-btn secondary" @click="exportData">
+              <img src="@/assets/icons/locket.png" alt="Export">
+              Export Data
+            </button>
           </div>
         </div>
 
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+          <div class="stat-card balance">
+            <div class="stat-icon">
+              <img src="@/assets/icons/locket.png" alt="Balance">
+            </div>
+            <div class="stat-content">
+              <h3>Current Balance</h3>
+              <p class="stat-value">DK {{ balance.toFixed(2) }}</p>
+              <span class="stat-change" :class="balanceChangeClass">{{ balanceChangeText }}</span>
+            </div>
+          </div>
+          
+          <div class="stat-card transactions">
+            <div class="stat-icon">
+              <img src="@/assets/icons/arrow-right-arrow-left-solid-full.svg" alt="Transactions">
+            </div>
+            <div class="stat-content">
+              <h3>Total Transactions</h3>
+              <p class="stat-value">{{ totalTransactions }}</p>
+              <span class="stat-subtitle">This month: {{ monthlyTransactions }}</span>
+            </div>
+          </div>
+
+          <div class="stat-card expenses">
+            <div class="stat-icon">
+              <img src="@/assets/icons/arrow-left-solid-full.svg" alt="Expenses">
+            </div>
+            <div class="stat-content">
+              <h3>Total Expenses</h3>
+              <p class="stat-value expense">-DK {{ totalExpenses.toFixed(2) }}</p>
+              <span class="stat-subtitle">This month</span>
+            </div>
+          </div>
+          
+          <div class="stat-card income">
+            <div class="stat-icon">
+              <img src="@/assets/icons/arrow-left-solid-full.svg" alt="Income">
+            </div>
+            <div class="stat-content">
+              <h3>Total Income</h3>
+              <p class="stat-value income">+DK {{ totalIncome.toFixed(2) }}</p>
+              <span class="stat-subtitle">This month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content Sections -->
+        <div class="content-sections">
+          <!-- Account Information -->
+          <div class="section-card">
+            <div class="section-header">
+              <h3>
+                <img src="@/assets/icons/user-solid.svg" alt="Account">
+                Account Information
+              </h3>
+              <button class="edit-btn" @click="toggleAccountEdit">
+                <img src="@/assets/icons/locket.png" alt="Edit">
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Display Name</label>
+                  <div class="info-value" v-if="!editingAccount">{{ userDisplayName }}</div>
+                  <input v-else v-model="editDisplayName" class="edit-input" type="text">
+                </div>
+                <div class="info-item">
+                  <label>Email Address</label>
+                  <div class="info-value">{{ currentUser?.email }}</div>
+                </div>
+                <div class="info-item">
+                  <label>Account Type</label>
+                  <div class="info-value">
+                    <span class="account-type">Personal Account</span>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <label>Last Login</label>
+                  <div class="info-value">{{ lastLoginDate }}</div>
+                </div>
+              </div>
+              <div v-if="editingAccount" class="edit-actions">
+                <button class="save-btn" @click="saveAccountChanges">Save Changes</button>
+                <button class="cancel-btn" @click="cancelAccountEdit">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+        
+          <!-- Preferences -->
+          <div class="section-card">
+            <div class="section-header">
+              <h3>
+                <img src="@/assets/icons/locket.png" alt="Settings">
+                Preferences & Settings
+              </h3>
+            </div>
+            <div class="section-content">
+              <div class="preferences-grid">
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <h4>Currency Display</h4>
+                    <p>Choose your preferred currency format</p>
+                  </div>
+                  <select class="preference-select" v-model="selectedCurrency" @change="savePreferences">
+                    <option value="DKK">Danish Krone (DK)</option>
+                    <option value="EUR">Euro (€)</option>
+                    <option value="USD">US Dollar ($)</option>
+                  </select>
+                </div>
+                
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <h4>Dark Mode</h4>
+                    <p>Switch to dark theme</p>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" v-model="darkMode" @change="savePreferences">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                
+            
+              </div>
+            </div>
+          </div>
+
+         <!-- Account Actions -->
+         <div class="section-card danger-zone">
+            <div class="section-header">
+              <h3>
+                <img src="@/assets/icons/locket.png" alt="Warning">
+                Account Actions
+              </h3>
+            </div>
+            <div class="section-content">
+              <div class="danger-actions">
+                <div class="danger-item">
+                  <div class="danger-info">
+                    <h4>Change Password</h4>
+                    <p>Update your account password for security</p>
+                  </div>
+                  <button class="danger-btn secondary" @click="changePassword" :disabled="isProcessing">
+                    {{ isProcessing ? 'Processing...' : 'Change Password' }}
+                  </button>
+                </div>
+                
+                <div class="danger-item">
+                  <div class="danger-info">
+                    <h4>Clear All Data</h4>
+                    <p>Permanently delete all your transactions</p>
+                  </div>
+                  <button class="danger-btn warning" @click="clearAllData" :disabled="isProcessing">
+                    {{ isProcessing ? 'Clearing...' : 'Clear Data' }}
+                  </button>
+                </div>
+                
+                <div class="danger-item">
+                  <div class="danger-info">
+                    <h4>Delete Account</h4>
+                    <p>Permanently delete your account and all data</p>
+                  </div>
+                  <button class="danger-btn primary" @click="() => deleteAccount(router)" :disabled="isProcessing">
+                    {{ isProcessing ? 'Deleting...' : 'Delete Account' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-  
+
 <script setup>
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/modules/useAuth'
 import { useTransactions } from '@/modules/useTransactions'
+import { useProfile } from '@/modules/useProfile'
+import { useCurrency } from '@/modules/useCurrency'
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()
-const { balance, transactions } = useTransactions()
+const { balance, totalExpenses, totalIncome } = useTransactions()
+const { formatCurrency } = useCurrency()
 
-// Computed property for total transactions count
-const totalTransactions = computed(() => {
-  return transactions.value.length
-})
+// Use the profile module (removed financial summary related properties)
+const {
+  // Reactive data
+  editingAccount,
+  editDisplayName,
+  selectedCurrency,
+  darkMode,
+  isProcessing,
+
+  // Computed properties 
+  totalTransactions,
+  joinDate,
+  lastLoginDate,
+  monthlyTransactions,
+  balanceChangeClass,
+  balanceChangeText,
+
+  // Methods
+  editAvatar,
+  editProfile,
+  exportData,
+  toggleAccountEdit,
+  saveAccountChanges,
+  cancelAccountEdit,
+  changePassword,
+  clearAllData,
+  deleteAccount,
+  savePreferences
+} = useProfile()
 
 const handleLogout = async () => {
-  await logout()
-  router.push('/')
+  try {
+    await logout()
+    router.push('/')
+  } catch (error) {
+    console.error('Logout failed:', error)
+    alert('Failed to logout. Please try again.')
+  }
 }
+
+const userDisplayName = computed(() => {
+  return currentUser.value?.displayName || currentUser.value?.email?.split('@')[0] || 'User'
+})
+
 </script>
-  
+
 
 <style scoped>
- * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -120,7 +334,7 @@ body {
   padding: 0;
 }
 
-.dashboard-container {
+.profile-container {
   display: flex;
   background-color: var(--color-main);
   height: 100vh;
@@ -252,62 +466,595 @@ body {
   overflow-x: hidden;
 }
 
-/* Profile specific styles */
-.profile-content {
-  padding: 20px 0;
+/* New profile styles */
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-.profile-content h1 {
-  font-size: 32px;
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-avatar {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: var(--color-main);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar img {
+  width: 40px;
+  height: 40px;
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.edit-avatar-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: var(--color-charts);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-avatar-btn img {
+  width: 12px;
+  height: 12px;
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.header-info h1 {
+  font-size: 28px;
   font-weight: 600;
   color: var(--color-text);
-  margin-bottom: 30px;
+  margin-bottom: 5px;
   font-family: 'Poppins', sans-serif;
 }
 
-.profile-info,
-.profile-section {
+.user-email {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.account-status {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.status-badge {
+  background: #e8f5e8;
+  color: #2d8f47;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.join-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.action-btn.primary {
+  background: var(--color-main);
+  color: white;
+}
+
+.action-btn.secondary {
+  background: #f5f5f5;
+  color: var(--color-text);
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn img {
+  width: 14px;
+  height: 14px;
+}
+
+.action-btn.primary img {
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
   background: white;
-  border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 25px;
-  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
 }
 
-.profile-info h3,
-.profile-section h3 {
-  font-size: 20px;
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card.balance .stat-icon {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.stat-card.transactions .stat-icon {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.stat-card.expenses .stat-icon {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stat-card.income .stat-icon {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.stat-icon img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.stat-content h3 {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.stat-value {
+  font-size: 24px;
   font-weight: 600;
   color: var(--color-text);
-  margin-bottom: 20px;
+  margin-bottom: 4px;
   font-family: 'Poppins', sans-serif;
+}
+
+.stat-value.expense {
+  color: #e74c3c;
+}
+
+.stat-value.income {
+  color: #27ae60;
+}
+
+.stat-change {
+  font-size: 12px;
+}
+
+.stat-change.positive {
+  color: #27ae60;
+}
+
+.stat-change.negative {
+  color: #e74c3c;
+}
+
+.stat-subtitle {
+  font-size: 12px;
+  color: #999;
+}
+
+
+/* Content Sections */
+.content-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.section-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.section-card.danger-zone {
+  border: 1px solid #fee;
+}
+
+.section-header {
+  background: #f8f9fa;
+  padding: 20px 25px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+  font-family: 'Poppins', sans-serif;
+}
+
+.section-header h3 img {
+  width: 20px;
+  height: 20px;
+  filter: opacity(0.7);
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.edit-btn:hover {
+  background: #e9ecef;
+}
+
+.edit-btn img {
+  width: 16px;
+  height: 16px;
+}
+
+.section-content {
+  padding: 25px;
+}
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 .info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  font-family: 'Poppins', sans-serif;
+}
+
+.info-value {
   font-size: 16px;
   color: var(--color-text);
-  margin-bottom: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
   font-family: 'Poppins', sans-serif;
-  padding: 8px 0;
+}
+
+.account-type {
+  background: #e8f5e8;
+  color: #2d8f47;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.edit-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-btn, .cancel-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+
+.save-btn {
+  background: var(--color-main);
+  color: white;
+}
+
+.cancel-btn {
+  background: #f5f5f5;
+  color: var(--color-text);
+}
+
+/* Financial Overview */
+.financial-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.overview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.overview-label {
+  font-size: 14px;
+  color: #666;
+  font-family: 'Poppins', sans-serif;
+}
+
+.overview-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  font-family: 'Poppins', sans-serif;
+}
+
+.overview-value.expense {
+  color: #e74c3c;
+}
+
+.overview-value.income {
+  color: #27ae60;
+}
+
+
+/* Preferences */
+.preferences-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.preference-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
   border-bottom: 1px solid #f0f0f0;
 }
 
-.info-item:last-child {
+.preference-item:last-child {
   border-bottom: none;
-  margin-bottom: 0;
 }
 
-.info-item strong {
-  color: var(--color-main);
-  margin-right: 10px;
-}
-
-.profile-section p {
+.preference-info h4 {
   font-size: 16px;
+  font-weight: 500;
   color: var(--color-text);
+  margin-bottom: 4px;
   font-family: 'Poppins', sans-serif;
-  line-height: 1.5;
+}
+
+.preference-info p {
+  font-size: 14px;
+  color: #666;
+  font-family: 'Poppins', sans-serif;
+}
+
+.preference-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  background: white;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: var(--color-main);
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+/* Danger Zone */
+.danger-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.danger-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #fee;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.danger-info h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 4px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.danger-info p {
+  font-size: 14px;
+  color: #666;
+  font-family: 'Poppins', sans-serif;
+}
+
+.danger-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.danger-btn.secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.danger-btn.warning {
+  background: #ffc107;
+  color: #212529;
+}
+
+.danger-btn.primary {
+  background: #dc3545;
+  color: white;
+}
+
+.danger-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .header-actions {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .financial-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .danger-item {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
 }
 
 </style>
