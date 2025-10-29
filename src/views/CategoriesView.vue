@@ -1,5 +1,7 @@
 <template>
   <div class="dashboard-container">
+    <transactionLogForm ref="transactionFormRef" />
+
     <!-- Side Menu (keep existing) -->
     <div class="side-menu">
       <div class="user-profile">
@@ -118,7 +120,9 @@
 
             <!-- Transaction Cards -->
             <div class="transactions-list" v-if="transactions.length > 0">
-              <div v-for="transaction in transactions" :key="transaction.id" class="transaction-card">
+              <!-- Add @click="openTransactionModal(transaction)" here -->
+              <div v-for="transaction in transactions" :key="transaction.id" class="transaction-card"
+                @click="openTransactionModal(transaction)">
                 <!-- Transaction Icon -->
                 <div class="transaction-icon" :class="getCategoryStyle(transaction.category)">
                   <img :src="getCategoryIcon(transaction.category)" :alt="transaction.category" class="category-svg">
@@ -139,35 +143,41 @@
                   {{ transaction.type === 'income' ? '+' : '-' }}DK {{ Math.abs(transaction.amount).toFixed(2) }}
                 </div>
 
-                <!-- Delete Button (Optional) -->
+                <!-- Delete Button (Optional)
                 <button @click="deleteTransaction(transaction.id)" class="delete-btn" title="Delete transaction">
                   <img src="@/assets/icons/trash-can-solid-full.svg" alt="Delete" class="delete-icon">
-                </button>
+                </button> -->
               </div>
 
             </div>
 
-       <!-- No Transactions Message -->
+            <!-- No Transactions Message -->
             <div v-else class="no-transactions">
               <p>No transactions found</p>
             </div>
 
-            
+
+
+            <!-- Transaction Modal -->
+            <transactionLogForm :is-open="isModalOpen" :transaction="selectedTransaction" @close="closeModal"
+              @save="handleTransactionSave" @delete="handleTransactionDelete" />
+
           </div>
 
-          
+
         </div>
       </div>
     </div>
   </div>
-  
+
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/modules/useAuth'
 import { useTransactions } from '@/modules/useTransactions'
+import transactionLogForm from '@/components/transactionLogForm.vue'
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()
@@ -259,6 +269,30 @@ const getCategoryStyle = (category) => {
 const navigateToCategory = (categoryName) => {
   // You can implement navigation logic here
   console.log('Navigate to category:', categoryName)
+}
+
+// Modal state
+const isModalOpen = ref(false)
+const selectedTransaction = ref({})
+
+const openTransactionModal = (transaction) => {
+  selectedTransaction.value = transaction
+  isModalOpen.value = true
+}
+
+const closeModal = () => {
+  isModalOpen.value = false
+  selectedTransaction.value = {}
+}
+
+const handleTransactionSave = (updatedTransaction) => {
+  console.log('Transaction saved:', updatedTransaction)
+  // The real-time listener will update the UI automatically
+}
+
+const handleTransactionDelete = (transactionId) => {
+  console.log('Transaction deleted:', transactionId)
+  // The real-time listener will update the UI automatically
 }
 
 </script>
@@ -773,14 +807,16 @@ body {
 .education-icon .category-svg,
 .shopping-icon .category-svg,
 .utilities-icon .category-svg {
-  filter: brightness(0) invert(1); /* White icons */
+  filter: brightness(0) invert(1);
+  /* White icons */
 }
 
 .transport-icon .category-svg,
 .food-icon .category-svg,
 .travel-icon .category-svg,
 .other-icon .category-svg {
-  filter: brightness(0); /* Black icons */
+  filter: brightness(0);
+  /* Black icons */
 }
 
 /* Transaction Details */

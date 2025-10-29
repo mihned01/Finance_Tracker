@@ -47,11 +47,11 @@
                 <div class="add-circle">+</div>
                 <div class="transaction-item">
                   <div class="category-icon transport">
-                    <img src="@/assets/icons/car-solid-full.svg" alt="icon">
+                    <img src="@/assets/icons/bolt-solid-full.svg" alt="icon">
                   </div>
                   <div class="transaction-details">
                     <div class="details-left">
-                      <p>Transport</p>
+                      <p>Rent & Bills</p>
                       <p class="date">13/08/2025</p>
                     </div>
                     <div class="details-right">
@@ -223,7 +223,31 @@ waapi.animate('.connector', {
 
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
 .container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: fit-content;
   background-color: #fafafa;
@@ -289,9 +313,10 @@ waapi.animate('.connector', {
 }
 
 .hero-left button:hover {
-  background-color: var(--color-background);
+  background-color: var(--color-main);
   color: var(--color-button);
   border: 1.5px solid var(--color-button);
+  transform: scale(1.02);
 }
 
 .hero-right {

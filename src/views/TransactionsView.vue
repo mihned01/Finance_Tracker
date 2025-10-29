@@ -1,5 +1,7 @@
 <template>
   <div class="dashboard-container">
+    <transactionLogForm ref="transactionFormRef" />
+
     <!-- Side Menu -->
     <div class="side-menu">
       <div class="user-profile">
@@ -162,7 +164,7 @@
 
             <!-- Transaction Cards -->
             <div class="transactions-list" v-if="transactions.length > 0">
-              <div v-for="transaction in transactions" :key="transaction.id" class="transaction-card">
+              <div v-for="transaction in transactions" :key="transaction.id" class="transaction-card"@click="openTransactionModal(transaction)">
                 <!-- Transaction Icon -->
                 <div class="transaction-icon" :class="getCategoryStyle(transaction.category)">
                   <img :src="getCategoryIcon(transaction.category)" :alt="transaction.category" class="category-svg">
@@ -183,11 +185,11 @@
                   {{ transaction.type === 'income' ? '+' : '-' }}DK {{ Math.abs(transaction.amount).toFixed(2) }}
                 </div>
 
-                <!-- Delete Button (Optional) -->
+                <!-- Delete Button (Optional)
                 <button @click="deleteTransaction(transaction.id)" class="delete-btn" title="Delete transaction">
                   <img src="@/assets/icons/trash-can-solid-full.svg" alt="Delete" class="delete-icon">
-                </button>
-              </div>
+                </button>-->
+              </div> 
 
             </div>
 
@@ -196,6 +198,15 @@
               <p>No transactions found</p>
             </div>
 
+
+    <!-- Transaction Modal -->
+    <transactionLogForm 
+      :is-open="isModalOpen" 
+      :transaction="selectedTransaction"
+      @close="closeModal"
+      @save="handleTransactionSave"
+      @delete="handleTransactionDelete"
+    />
 
             <RouterView />
           </div>
@@ -209,6 +220,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/modules/useAuth'
 import { useTransactions } from '@/modules/useTransactions'
+import transactionLogForm from '@/components/transactionLogForm.vue'
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()
@@ -279,6 +291,32 @@ const getCategoryStyle = (category) => {
   };
   return styles[category] || 'other-icon';
 };
+
+
+// Modal state
+const isModalOpen = ref(false)
+const selectedTransaction = ref({})
+
+const openTransactionModal = (transaction) => {
+  selectedTransaction.value = transaction
+  isModalOpen.value = true
+}
+
+const closeModal = () => {
+  isModalOpen.value = false
+  selectedTransaction.value = {}
+}
+
+const handleTransactionSave = (updatedTransaction) => {
+  console.log('Transaction saved:', updatedTransaction)
+  // The real-time listener will update the UI automatically
+}
+
+const handleTransactionDelete = (transactionId) => {
+  console.log('Transaction deleted:', transactionId)
+  // The real-time listener will update the UI automatically
+}
+
 </script>
 
 
@@ -782,21 +820,7 @@ body {
   text-overflow: ellipsis;
 }
 
-/* Transaction amount styling */
-.transaction-amount {
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
-  text-align: right;
-}
 
-.income-amount {
-  color: var(--color-charts);
-}
-
-.expense-amount {
-  color: #f44336;
-}
 
 /* Transaction item layout */
 .transaction-item {
@@ -844,11 +868,16 @@ body {
   gap: 15px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 }
 
 .transaction-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.delete-btn {
+  display: none; /* Hide the inline delete button */
 }
 
 /* Transaction Icon */
@@ -972,7 +1001,7 @@ body {
 }
 
 .income-amount {
-  color: var(--color-charts);
+  color: #06D143;
 }
 
 .expense-amount {

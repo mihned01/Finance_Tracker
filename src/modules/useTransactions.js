@@ -1,5 +1,5 @@
 import { ref, computed, watch, onUnmounted } from 'vue';
-import { collection, onSnapshot, addDoc, deleteDoc, doc, query, where, orderBy, serverTimestamp } from "firebase/firestore";
+import { collection, onSnapshot, addDoc, deleteDoc, doc, query, where, orderBy, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from './firebase.js';
 import { useAuth } from './useAuth.js';
 
@@ -227,6 +227,38 @@ export function useTransactions() {
     return transactions.value.slice(0, 5);
   });
 
+  const updateTransaction = async (updatedTransaction) => {
+    if (!currentUser.value) {
+      errorMessage.value = "You must be logged in to update transactions";
+      showErrorMessage.value = true;
+      return;
+    }
+
+    try {
+      console.log("Updating transaction:", updatedTransaction.id);
+      
+      const transactionRef = doc(db, transactionsFBcollectionRef, updatedTransaction.id);
+      
+      await updateDoc(transactionRef, {
+        amount: parseFloat(updatedTransaction.amount),
+        description: updatedTransaction.description?.trim() || updatedTransaction.category,
+        category: updatedTransaction.category,
+        type: updatedTransaction.type,
+        updatedAt: serverTimestamp()
+      });
+
+      console.log("Transaction updated successfully");
+    } catch (error) {
+      console.error("Error updating transaction:", error);
+      errorMessage.value = "Error updating transaction. Please try again.";
+      showErrorMessage.value = true;
+      setTimeout(() => {
+        showErrorMessage.value = false;
+      }, 3000);
+      throw error;
+    }
+  };
+
   return {
     transactions,
     newTransaction,
@@ -235,6 +267,7 @@ export function useTransactions() {
     showErrorMessage,
     isLoading,
     addTransaction,
+    updateTransaction,
     deleteTransaction,
     totalExpenses,
     totalIncome,
@@ -242,4 +275,5 @@ export function useTransactions() {
     recentTransactions,
     currentUser
   };
+
 }

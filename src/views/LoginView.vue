@@ -110,18 +110,42 @@ const goToHome = () => {
 </script>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
 .auth-container {
   display: flex;
+  width: 100vw;
+  height: 100vh;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background-color: var(--color-main);
-  padding: 20px;
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
 }
 
 .form-container {
-  width: 900px;
-  height: 500px;
+  width: 1000px;
+  height: 600px;
   position: relative;
   overflow: hidden;
   border-radius: 20px;
