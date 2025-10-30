@@ -275,4 +275,5 @@ export function useTransactions() {
     recentTransactions,
     currentUser
   };
+
 }

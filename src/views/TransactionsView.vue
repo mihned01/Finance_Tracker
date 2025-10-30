@@ -62,6 +62,7 @@
             <div class="stat-card expenses">
               <p class="stat-label">Expenses</p>
               <p class="stat-number">DK {{ totalExpenses.toFixed(2) }}</p>
+              <p class="stat-subtitle">5% more than previous month</p>
               <div class="stat-trend">
                 <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
               </div>
@@ -70,6 +71,7 @@
             <div class="stat-card income">
               <p class="stat-label">Income</p>
               <p class="stat-number">DK {{ totalIncome.toFixed(2) }}</p>
+              <p class="stat-subtitle">5% less than previous month</p>
               <div class="stat-trend">
                 <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
               </div>
@@ -256,7 +258,7 @@ const getCategoryIcon = (category) => {
     'Education': '/src/assets/icons/book-open-solid-full.svg',
     'Rent & Bills': '/src/assets/icons/bolt-solid-full.svg',
     'Travel': 'src/assets/icons/plane-solid-full.svg',
-    'Healthcare': '/src/assets/icons/capsules-solid-full.svg',
+    'Healthcare': '/src/assets/icons/heart-pulse-solid-full.svg',
     'Salary': '/src/assets/icons/dollar-sign-solid-full.svg',
     'Other': '/src/assets/icons/category.svg'
   };
@@ -486,6 +488,11 @@ body {
   margin: 0 0 4px 0;
 }
 
+.stat-subtitle {
+  font-size: 10px;
+  margin: 0;
+  opacity: 0.7;
+}
 
 .stat-trend {
   position: absolute;

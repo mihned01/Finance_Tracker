@@ -115,7 +115,7 @@
               your own to organize spending and identify areas for improvement.</p>
           </div>
           <div class="feature-box-bottom">
-            <img src="@/assets/images/feature2.png" alt="categorized expenses example">
+            <img src="@/assets/images/feature2.2.png" alt="categorized expenses example">
           </div>
         </div>
         <div class="feature-box">
