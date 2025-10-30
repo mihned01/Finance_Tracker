@@ -258,7 +258,7 @@ const getCategoryIcon = (category) => {
     'Education': '/src/assets/icons/book-open-solid-full.svg',
     'Rent & Bills': '/src/assets/icons/bolt-solid-full.svg',
     'Travel': 'src/assets/icons/plane-solid-full.svg',
-    'Healthcare': '/src/assets/icons/heart-pulse-solid-full.svg',
+    'Healthcare': '/src/assets/icons/capsules-solid-full.svg',
     'Salary': '/src/assets/icons/dollar-sign-solid-full.svg',
     'Other': '/src/assets/icons/category.svg'
   };

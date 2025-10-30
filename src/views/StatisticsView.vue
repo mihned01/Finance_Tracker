@@ -48,39 +48,40 @@
         <!-- Header Section -->
         <div class="statistics-header">
 
-<div class="header">
-  <div class="stat-card">
-    <p class="stat-label">Total transactions</p>
-    <p class="stat-number">{{ transactions.length }}</p>
-    <div class="stat-trend-t">
-      <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
-    </div>
-  </div>
+          <div class="header">
+            <div class="stat-card">
+              <p class="stat-label">Total transactions</p>
+              <p class="stat-number">{{ transactions.length }}</p>
+              <div class="stat-trend-t">
+                <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
+              </div>
+            </div>
 
-  <div class="stat-card expenses">
-    <p class="stat-label">Expenses</p>
-    <p class="stat-number">DK {{ totalExpenses.toFixed(2) }}</p>
-    <p class="stat-subtitle">5% more than previous month</p>
-    <div class="stat-trend">
-      <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
-    </div>
-  </div>
+            <div class="stat-card expenses">
+              <p class="stat-label">Expenses</p>
+              <p class="stat-number">DK {{ totalExpenses.toFixed(2) }}</p>
+              <p class="stat-subtitle">5% more than previous month</p>
+              <div class="stat-trend">
+                <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
+              </div>
+            </div>
 
-  <div class="stat-card income">
-    <p class="stat-label">Income</p>
-    <p class="stat-number">DK {{ totalIncome.toFixed(2) }}</p>
-    <p class="stat-subtitle">5% less than previous month</p>
-    <div class="stat-trend">
-      <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
-    </div>
-  </div>
-</div>
-</div>
+            <div class="stat-card income">
+              <p class="stat-label">Income</p>
+              <p class="stat-number">DK {{ totalIncome.toFixed(2) }}</p>
+              <p class="stat-subtitle">5% less than previous month</p>
+              <div class="stat-trend">
+                <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
+              </div>
+            </div>
+          </div>
+        </div>
 
 
         <!-- Main Content Area -->
         <div class="content-grid">
-
+          <donutChart :transactions="transactions" />
+          <balanceOverviewChart :total-income="totalIncome" :total-expenses="totalExpenses" :balance="balance" />
         </div>
       </div>
     </div>
@@ -91,6 +92,8 @@
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/modules/useAuth'
 import { useTransactions } from '@/modules/useTransactions'
+import donutChart from '@/components/charts/donutChart.vue'
+import balanceOverviewChart from '@/components/charts/balanceOverviewChart.vue'
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()
@@ -476,5 +479,4 @@ body {
 .legend-color.shopping {
   background: #e0e0e0;
 }
-
 </style>

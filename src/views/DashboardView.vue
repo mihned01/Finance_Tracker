@@ -46,7 +46,7 @@
     <div class="main-content">
       <div class="main-content-container">
         <!-- Header Section -->
-        
+
         <div class="dashboard-header">
 
           <div class="header">
@@ -77,10 +77,11 @@
             </div>
           </div>
         </div>
+        
 
       </div>
     </div>
-    
+
   </div>
 </template>
 
@@ -342,7 +343,4 @@ body {
   padding: 4px;
   border-radius: 4px;
 }
-
-
-
 </style>
