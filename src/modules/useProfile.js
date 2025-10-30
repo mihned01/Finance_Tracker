@@ -13,8 +13,6 @@ export function useProfile() {
   // Reactive data
   const editingAccount = ref(false)
   const editDisplayName = ref('')
-  const selectedCurrency = ref('DKK')
-  const darkMode = ref(false)
   const isProcessing = ref(false)
 
   // Computed properties
@@ -39,11 +37,6 @@ export function useProfile() {
     return new Date().toLocaleDateString('en-GB')
   })
 
-  const monthlyTransactions = computed(() => {
-    const currentMonth = new Date().getMonth()
-    return transactions.value.filter(t => new Date(t.date).getMonth() === currentMonth).length
-  })
-
   const balanceChangeClass = computed(() => {
     return balance.value >= 0 ? 'positive' : 'negative'
   })
@@ -52,7 +45,7 @@ export function useProfile() {
     return balance.value >= 0 ? '+2.5% this month' : '-1.2% this month'
   })
 
-  const { updateCurrency, formatCurrency, currencySymbol } = useCurrency()
+  const { formatCurrency } = useCurrency()
 
   // Methods
   const editAvatar = () => {
@@ -263,39 +256,10 @@ export function useProfile() {
     }
   }
 
-  // SINGLE savePreferences function (with global currency sync)
-  const savePreferences = () => {
-    const preferences = {
-      currency: selectedCurrency.value,
-      darkMode: darkMode.value
-    }
-    
-    localStorage.setItem('userPreferences', JSON.stringify(preferences))
-    
-    // Update global currency
-    updateCurrency(selectedCurrency.value)
-    
-    console.log('Preferences saved:', preferences)
-  }
-
-  const loadPreferences = () => {
-    const saved = localStorage.getItem('userPreferences')
-    if (saved) {
-      const preferences = JSON.parse(saved)
-      selectedCurrency.value = preferences.currency || 'DKK'
-      darkMode.value = preferences.darkMode ?? false
-    }
-  }
-
-  // Auto-load preferences
-  loadPreferences()
-
   return {
     // Reactive data
     editingAccount,
     editDisplayName,
-    selectedCurrency,
-    darkMode,
     isProcessing,
 
     // Computed properties
@@ -303,10 +267,8 @@ export function useProfile() {
     userDisplayName,
     joinDate,
     lastLoginDate,
-    monthlyTransactions,
     balanceChangeClass,
     balanceChangeText,
-    currencySymbol,
     formatCurrency,
 
     // Methods
@@ -318,8 +280,6 @@ export function useProfile() {
     cancelAccountEdit,
     changePassword,
     clearAllData,
-    deleteAccount,
-    savePreferences,
-    loadPreferences
+    deleteAccount
   }
 }

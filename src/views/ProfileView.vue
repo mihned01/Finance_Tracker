@@ -154,44 +154,6 @@
             </div>
           </div>
 
-        
-          <!-- Preferences -->
-          <div class="section-card">
-            <div class="section-header">
-              <h3>
-                <img src="@/assets/icons/locket.png" alt="Settings">
-                Preferences & Settings
-              </h3>
-            </div>
-            <div class="section-content">
-              <div class="preferences-grid">
-                <div class="preference-item">
-                  <div class="preference-info">
-                    <h4>Currency Display</h4>
-                    <p>Choose your preferred currency format</p>
-                  </div>
-                  <select class="preference-select" v-model="selectedCurrency" @change="savePreferences">
-                    <option value="DKK">Danish Krone (DK)</option>
-                    <option value="EUR">Euro (€)</option>
-                    <option value="USD">US Dollar ($)</option>
-                  </select>
-                </div>
-                
-                <div class="preference-item">
-                  <div class="preference-info">
-                    <h4>Dark Mode</h4>
-                    <p>Switch to dark theme</p>
-                  </div>
-                  <label class="toggle-switch">
-                    <input type="checkbox" v-model="darkMode" @change="savePreferences">
-                    <span class="toggle-slider"></span>
-                  </label>
-                </div>
-                
-            
-              </div>
-            </div>
-          </div>
 
          <!-- Account Actions -->
          <div class="section-card danger-zone">
@@ -259,15 +221,12 @@ const {
   // Reactive data
   editingAccount,
   editDisplayName,
-  selectedCurrency,
-  darkMode,
   isProcessing,
 
   // Computed properties 
   totalTransactions,
   joinDate,
   lastLoginDate,
-  monthlyTransactions,
   balanceChangeClass,
   balanceChangeText,
 
@@ -281,7 +240,6 @@ const {
   changePassword,
   clearAllData,
   deleteAccount,
-  savePreferences
 } = useProfile()
 
 const handleLogout = async () => {
@@ -859,93 +817,6 @@ body {
 }
 
 
-/* Preferences */
-.preferences-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-.preference-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.preference-item:last-child {
-  border-bottom: none;
-}
-
-.preference-info h4 {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--color-text);
-  margin-bottom: 4px;
-  font-family: 'Poppins', sans-serif;
-}
-
-.preference-info p {
-  font-size: 14px;
-  color: #666;
-  font-family: 'Poppins', sans-serif;
-}
-
-.preference-select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
-  font-family: 'Poppins', sans-serif;
-  background: white;
-}
-
-/* Toggle Switch */
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-}
-
-.toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 24px;
-}
-
-.toggle-slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-input:checked + .toggle-slider {
-  background-color: var(--color-main);
-}
-
-input:checked + .toggle-slider:before {
-  transform: translateX(26px);
-}
 
 /* Danger Zone */
 .danger-actions {

@@ -105,7 +105,7 @@
               amounts instantly so nothing slips through the cracks.</p>
           </div>
           <div class="feature-box-bottom">
-            <img src="@/assets/icons/feature3.png" alt="chart example">
+            <img src="@/assets/images/feature1.png" alt="chart example">
           </div>
         </div>
         <div class="feature-box">
@@ -115,7 +115,7 @@
               your own to organize spending and identify areas for improvement.</p>
           </div>
           <div class="feature-box-bottom">
-            <img src="@/assets/icons/feature2.png" alt="categorized expenses example">
+            <img src="@/assets/images/feature2.png" alt="categorized expenses example">
           </div>
         </div>
         <div class="feature-box">
@@ -125,7 +125,7 @@
               summaries and statistics to make informed financial decisions.</p>
           </div>
           <div class="feature-box-bottom">
-            <img src="@/assets/icons/feature3.png" alt="chart example">
+            <img src="@/assets/images/feature3.png" alt="chart example">
           </div>
         </div>
       </div>
