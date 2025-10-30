@@ -50,9 +50,6 @@
           <div class="header-left">
             <div class="profile-avatar">
               <img src="@/assets/icons/user-solid.svg" alt="Profile">
-              <button class="edit-avatar-btn" @click="editAvatar">
-                <img src="@/assets/icons/locket.png" alt="Edit">
-              </button>
             </div>
             <div class="header-info">
               <h1>{{ userDisplayName }}</h1>
@@ -65,11 +62,11 @@
           </div>
           <div class="header-actions">
             <button class="action-btn primary" @click="editProfile">
-              <img src="@/assets/icons/locket.png" alt="Edit">
+              <img src="@/assets/icons/pencil-solid-full.svg" alt="Edit">
               Edit Profile
             </button>
             <button class="action-btn secondary" @click="exportData">
-              <img src="@/assets/icons/locket.png" alt="Export">
+              <img src="@/assets/icons/file-solid-full.svg" alt="Export">
               Export Data
             </button>
           </div>
@@ -80,34 +77,32 @@
 
 <div class="stat-card balance">
   <div class="stat-icon">
-    <img src="@/assets/icons/locket.png" alt="Balance">
+    <img src="@/assets/icons/chart-line-solid-full.svg" alt="Balance">
   </div>
   <div class="stat-content">
     <h3>Current Balance</h3>
-    <p class="stat-value">{{ formatCurrency(balance) }}</p> <!-- Updated -->
+    <p class="stat-value">{{ balance.toFixed(2) }}</p> <!-- Updated -->
     <span class="stat-change" :class="balanceChangeClass">{{ balanceChangeText }}</span>
   </div>
 </div>
 
 <div class="stat-card expenses">
   <div class="stat-icon">
-    <img src="@/assets/icons/arrow-left-solid-full.svg" alt="Expenses">
+    <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="Expenses">
   </div>
   <div class="stat-content">
     <h3>Total Expenses</h3>
-    <p class="stat-value expense">-{{ formatCurrency(totalExpenses) }}</p> <!-- Updated -->
-    <span class="stat-subtitle">This month</span>
+    <p class="stat-value expense">-{{ totalExpenses.toFixed(2) }}</p> <!-- Updated -->
   </div>
 </div>
 
 <div class="stat-card income">
   <div class="stat-icon">
-    <img src="@/assets/icons/arrow-left-solid-full.svg" alt="Income">
+    <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="Income">
   </div>
   <div class="stat-content">
     <h3>Total Income</h3>
-    <p class="stat-value income">+{{ formatCurrency(totalIncome) }}</p> <!-- Updated -->
-    <span class="stat-subtitle">This month</span>
+    <p class="stat-value income">+{{ totalIncome.toFixed(2) }}</p> <!-- Updated -->
   </div>
 </div>
         </div>
@@ -122,7 +117,7 @@
                 Account Information
               </h3>
               <button class="edit-btn" @click="toggleAccountEdit">
-                <img src="@/assets/icons/locket.png" alt="Edit">
+                <img src="@/assets/icons/pencil-solid-full.svg" alt="Edit">
               </button>
             </div>
             <div class="section-content">
@@ -159,8 +154,8 @@
          <div class="section-card danger-zone">
             <div class="section-header">
               <h3>
-                <img src="@/assets/icons/locket.png" alt="Warning">
-                Account Actions
+                <img src="@/assets/icons/gear-solid-full.svg" alt="Warning">
+                Account Settigns
               </h3>
             </div>
             <div class="section-content">
@@ -217,6 +212,7 @@ const { balance, totalExpenses, totalIncome } = useTransactions()
 const { formatCurrency } = useCurrency()
 
 // Use the profile module (removed financial summary related properties)
+
 const {
   // Reactive data
   editingAccount,
@@ -231,7 +227,6 @@ const {
   balanceChangeText,
 
   // Methods
-  editAvatar,
   editProfile,
   exportData,
   toggleAccountEdit,
@@ -239,7 +234,7 @@ const {
   cancelAccountEdit,
   changePassword,
   clearAllData,
-  deleteAccount,
+  deleteAccount
 } = useProfile()
 
 const handleLogout = async () => {
@@ -326,11 +321,11 @@ body {
 }
 
 .profile-image {
-  width: 40px;
-  height: 40px;
-  padding: 10px;
+  width: 60px;
+  height: 60px;
+  padding: 15px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
+  background: #f6f6f6;
   margin-bottom: 1rem;
 }
 
@@ -453,8 +448,8 @@ body {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   background: var(--color-charts);
   border: none;
   border-radius: 50%;
@@ -465,8 +460,8 @@ body {
 }
 
 .edit-avatar-btn img {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   filter: brightness(0) saturate(100%) invert(100%);
 }
 
@@ -526,11 +521,10 @@ body {
 
 .action-btn.primary {
   background: var(--color-main);
-  color: white;
+  color: var(--color-text);
 }
 
 .action-btn.secondary {
-  background: #f5f5f5;
   color: var(--color-text);
 }
 
@@ -540,13 +534,11 @@ body {
 }
 
 .action-btn img {
+  color: var(--color-text);
   width: 14px;
   height: 14px;
 }
 
-.action-btn.primary img {
-  filter: brightness(0) saturate(100%) invert(100%);
-}
 
 
 /* Stats Grid */
@@ -771,7 +763,7 @@ body {
 
 .save-btn {
   background: var(--color-main);
-  color: white;
+  color: var(--color-text);
 }
 
 .cancel-btn {
@@ -917,5 +909,7 @@ body {
     text-align: center;
   }
 }
+
+
 
 </style>

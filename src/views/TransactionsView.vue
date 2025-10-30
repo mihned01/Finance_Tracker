@@ -375,14 +375,13 @@ body {
 }
 
 .profile-image {
-  width: 40px;
-  height: 40px;
-  padding: 10px;
+  width: 60px;
+  height: 60px;
+  padding: 15px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
+  background: #f6f6f6;
   margin-bottom: 1rem;
 }
-
 .user-info h2 {
   font-family: 'Poppins', sans-serif;
   font-size: 18px;

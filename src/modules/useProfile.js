@@ -48,20 +48,6 @@ export function useProfile() {
   const { formatCurrency } = useCurrency()
 
   // Methods
-  const editAvatar = () => {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = 'image/*'
-    input.onchange = (event) => {
-      const file = event.target.files[0]
-      if (file) {
-        console.log('Avatar file selected:', file.name)
-        alert('Avatar upload functionality would be implemented here')
-      }
-    }
-    input.click()
-  }
-
   const editProfile = () => {
     editingAccount.value = true
     editDisplayName.value = userDisplayName.value
@@ -272,7 +258,6 @@ export function useProfile() {
     formatCurrency,
 
     // Methods
-    editAvatar,
     editProfile,
     exportData,
     toggleAccountEdit,
