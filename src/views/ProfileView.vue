@@ -204,7 +204,6 @@ import { useRouter } from 'vue-router'
 import { useAuth } from '@/modules/useAuth'
 import { useTransactions } from '@/modules/useTransactions'
 import { useProfile } from '@/modules/useProfile'
-import { useCurrency } from '@/modules/useCurrency'
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()
