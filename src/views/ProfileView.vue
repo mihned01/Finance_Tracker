@@ -77,49 +77,39 @@
 
         <!-- Stats Overview -->
         <div class="stats-grid">
-          <div class="stat-card balance">
-            <div class="stat-icon">
-              <img src="@/assets/icons/locket.png" alt="Balance">
-            </div>
-            <div class="stat-content">
-              <h3>Current Balance</h3>
-              <p class="stat-value">DK {{ balance.toFixed(2) }}</p>
-              <span class="stat-change" :class="balanceChangeClass">{{ balanceChangeText }}</span>
-            </div>
-          </div>
-          
-          <div class="stat-card transactions">
-            <div class="stat-icon">
-              <img src="@/assets/icons/arrow-right-arrow-left-solid-full.svg" alt="Transactions">
-            </div>
-            <div class="stat-content">
-              <h3>Total Transactions</h3>
-              <p class="stat-value">{{ totalTransactions }}</p>
-              <span class="stat-subtitle">This month: {{ monthlyTransactions }}</span>
-            </div>
-          </div>
 
-          <div class="stat-card expenses">
-            <div class="stat-icon">
-              <img src="@/assets/icons/arrow-left-solid-full.svg" alt="Expenses">
-            </div>
-            <div class="stat-content">
-              <h3>Total Expenses</h3>
-              <p class="stat-value expense">-DK {{ totalExpenses.toFixed(2) }}</p>
-              <span class="stat-subtitle">This month</span>
-            </div>
-          </div>
-          
-          <div class="stat-card income">
-            <div class="stat-icon">
-              <img src="@/assets/icons/arrow-left-solid-full.svg" alt="Income">
-            </div>
-            <div class="stat-content">
-              <h3>Total Income</h3>
-              <p class="stat-value income">+DK {{ totalIncome.toFixed(2) }}</p>
-              <span class="stat-subtitle">This month</span>
-            </div>
-          </div>
+<div class="stat-card balance">
+  <div class="stat-icon">
+    <img src="@/assets/icons/locket.png" alt="Balance">
+  </div>
+  <div class="stat-content">
+    <h3>Current Balance</h3>
+    <p class="stat-value">{{ formatCurrency(balance) }}</p> <!-- Updated -->
+    <span class="stat-change" :class="balanceChangeClass">{{ balanceChangeText }}</span>
+  </div>
+</div>
+
+<div class="stat-card expenses">
+  <div class="stat-icon">
+    <img src="@/assets/icons/arrow-left-solid-full.svg" alt="Expenses">
+  </div>
+  <div class="stat-content">
+    <h3>Total Expenses</h3>
+    <p class="stat-value expense">-{{ formatCurrency(totalExpenses) }}</p> <!-- Updated -->
+    <span class="stat-subtitle">This month</span>
+  </div>
+</div>
+
+<div class="stat-card income">
+  <div class="stat-icon">
+    <img src="@/assets/icons/arrow-left-solid-full.svg" alt="Income">
+  </div>
+  <div class="stat-content">
+    <h3>Total Income</h3>
+    <p class="stat-value income">+{{ formatCurrency(totalIncome) }}</p> <!-- Updated -->
+    <span class="stat-subtitle">This month</span>
+  </div>
+</div>
         </div>
 
         <!-- Main Content Sections -->
