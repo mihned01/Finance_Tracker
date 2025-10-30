@@ -259,7 +259,6 @@ export function useTransactions() {
     }
   };
 
-
   return {
     transactions,
     newTransaction,
@@ -267,9 +266,6 @@ export function useTransactions() {
     errorMessage,
     showErrorMessage,
     isLoading,
-    error,
-    getTransactions,
-    monthlyTotals,
     addTransaction,
     updateTransaction,
     deleteTransaction,

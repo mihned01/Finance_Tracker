@@ -123,7 +123,6 @@ import progressChart from '@/components/charts/progressChart.vue'
 import heatMapChart from '@/components/charts/heatMapChart.vue'
 import lineChart from '@/components/charts/lineChart.vue'
 
-
 const budgetGoals = ref({
   'Food & Drinks': 2000,
   'Transport': 1500,
