@@ -45,15 +45,23 @@ const props = defineProps({
   }
 })
 
-const colors = [
-  'var(--color-charts-three)',     // Red
-  'var(--color-charts-secondary)', // Green  
-  'var(--color-charts)',           // Blue
-  '#f39c12',                       // Orange
-  '#9b59b6',                       // Purple
-  '#34495e',                       // Dark gray
-  '#95a5a6'                        // Light gray
-]
+// Use the same colors from your Categories and Transactions components
+const getCategoryColor = (category) => {
+  const categoryColors = {
+    'Rent & Bills': '#4facfe',
+    'Transport': '#00d4aa',      
+    'Healthcare': '#ff6b6b',      
+    'Education': '#ff8c42',      
+    'Salary': '#51cf66',      
+    'Food & Drinks': '#ffd43b',  
+    'Food': '#ffd43b',             
+    'Shopping': '#9775fa',    
+    'Travel': '#ff8cc8',           
+    'Utilities': '#339af0',         
+    'Other': '#868e96' 
+  }
+  return categoryColors[category] || categoryColors['Other']
+}
 
 const expenseTransactions = computed(() => {
   return props.transactions.filter(t => t.type === 'expense')
@@ -64,26 +72,40 @@ const totalExpenses = computed(() => {
 })
 
 const currentMonthExpenses = computed(() => {
-  const currentMonth = new Date().getMonth()
-  const currentYear = new Date().getFullYear()
+  const now = new Date()
+  const currentMonth = now.getMonth()
+  const currentYear = now.getFullYear()
   
   return expenseTransactions.value
     .filter(t => {
+      if (!t.date) return false
+      
       const date = new Date(t.date)
+      if (isNaN(date.getTime())) return false
+      
       return date.getMonth() === currentMonth && date.getFullYear() === currentYear
     })
     .reduce((sum, t) => sum + Math.abs(t.amount), 0)
 })
 
 const lastMonthExpenses = computed(() => {
-  const lastMonth = new Date().getMonth() - 1
-  const year = lastMonth < 0 ? new Date().getFullYear() - 1 : new Date().getFullYear()
-  const month = lastMonth < 0 ? 11 : lastMonth
+  const now = new Date()
+  let lastMonth = now.getMonth() - 1
+  let year = now.getFullYear()
+  
+  if (lastMonth < 0) {
+    lastMonth = 11
+    year -= 1
+  }
   
   return expenseTransactions.value
     .filter(t => {
+      if (!t.date) return false
+      
       const date = new Date(t.date)
-      return date.getMonth() === month && date.getFullYear() === year
+      if (isNaN(date.getTime())) return false
+      
+      return date.getMonth() === lastMonth && date.getFullYear() === year
     })
     .reduce((sum, t) => sum + Math.abs(t.amount), 0)
 })
@@ -97,10 +119,10 @@ const categoryData = computed(() => {
   })
   
   return Object.entries(categoryTotals)
-    .map(([name, amount], index) => ({
+    .map(([name, amount]) => ({
       name,
       amount,
-      color: colors[index % colors.length],
+      color: getCategoryColor(name),
       percentage: totalExpenses.value > 0 ? (amount / totalExpenses.value) * 100 : 0
     }))
     .sort((a, b) => b.amount - a.amount)
@@ -129,6 +151,8 @@ const donutGradient = computed(() => {
   return `conic-gradient(${gradientStops.join(', ')})`
 })
 </script>
+
+
 
 <style scoped>
 .expenses-card {

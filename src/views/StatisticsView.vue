@@ -46,42 +46,67 @@
     <div class="main-content">
       <div class="main-content-container">
         <!-- Header Section -->
-        <div class="statistics-header">
 
-          <div class="header">
-            <div class="stat-card">
-              <p class="stat-label">Total transactions</p>
-              <p class="stat-number">{{ transactions.length }}</p>
-              <div class="stat-trend-t">
-                <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
-              </div>
-            </div>
+        <div class="dashboard-header">
 
-            <div class="stat-card expenses">
-              <p class="stat-label">Expenses</p>
-              <p class="stat-number">DK {{ totalExpenses.toFixed(2) }}</p>
-              <p class="stat-subtitle">5% more than previous month</p>
-              <div class="stat-trend">
-                <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
-              </div>
-            </div>
+<div class="header">
+  <div class="stat-card">
+    <p class="stat-label">Total transactions</p>
+    <p class="stat-number">{{ transactions.length }}</p>
+    <div class="stat-trend-t">
+      <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
+    </div>
+  </div>
 
-            <div class="stat-card income">
-              <p class="stat-label">Income</p>
-              <p class="stat-number">DK {{ totalIncome.toFixed(2) }}</p>
-              <p class="stat-subtitle">5% less than previous month</p>
-              <div class="stat-trend">
-                <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
-              </div>
-            </div>
+  <div class="stat-card expenses">
+    <p class="stat-label">Expenses</p>
+    <p class="stat-number">DK {{ totalExpenses.toFixed(2) }}</p>
+    <div class="stat-trend">
+      <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
+    </div>
+  </div>
+
+  <div class="stat-card income">
+    <p class="stat-label">Income</p>
+    <p class="stat-number">DK {{ totalIncome.toFixed(2) }}</p>
+    <div class="stat-trend">
+      <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
+    </div>
+  </div>
+</div>
+</div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+          <h2>Financial Analysis</h2>
+          
+          <!-- Statistics Grid -->
+          <div class="statistics-grid">
+
+            <!-- Category Breakdown -->
+            <donutChart 
+              :transactions="transactions" 
+              title="Expense Categories" 
+            />
+
+            <!-- Budget Progress -->
+            <progressChart 
+              :transactions="transactions" 
+              title="Budget Analysis"
+              :budget-goals="budgetGoals"
+            />
+
+            <!-- Daily Spending Heatmap -->
+            <heatMapChart 
+              :transactions="transactions" 
+              title="Spending Patterns" 
+            />
+
+            <lineChart 
+              :transactions="transactions" 
+              title="Spending Over Time" 
+            />
           </div>
-        </div>
-
-
-        <!-- Main Content Area -->
-        <div class="content-grid">
-          <donutChart :transactions="transactions" />
-          <balanceOverviewChart :total-income="totalIncome" :total-expenses="totalExpenses" :balance="balance" />
         </div>
       </div>
     </div>
@@ -89,11 +114,24 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/modules/useAuth'
 import { useTransactions } from '@/modules/useTransactions'
 import donutChart from '@/components/charts/donutChart.vue'
-import balanceOverviewChart from '@/components/charts/balanceOverviewChart.vue'
+import progressChart from '@/components/charts/progressChart.vue'
+import heatMapChart from '@/components/charts/heatMapChart.vue'
+import lineChart from '@/components/charts/lineChart.vue'
+
+
+const budgetGoals = ref({
+  'Food & Drinks': 2000,
+  'Transport': 1500,
+  'Shopping': 1000,
+  'Healthcare': 800,
+  'Travel': 3000,
+  'Education': 1200
+})
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()
@@ -105,29 +143,11 @@ const handleLogout = async () => {
 }
 </script>
 
-
-
 <style scoped>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-#app {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
 }
 
 .dashboard-container {
@@ -136,8 +156,6 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
 }
 
 .side-menu {
@@ -166,7 +184,8 @@ body {
   border-radius: 16px;
   padding: 30px;
   overflow-y: auto;
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .user-profile {
@@ -224,7 +243,6 @@ body {
   text-align: center;
 }
 
-
 .menu-footer {
   margin-top: auto;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -240,14 +258,13 @@ body {
   font-size: 1rem;
 }
 
-.dashboard-header {
+.statistics-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 30px;
   gap: 20px;
 }
-
 
 .header {
   display: flex;
@@ -334,149 +351,41 @@ body {
   border-radius: 4px;
 }
 
-.content-grid {
-  display: grid;
-  grid-template-columns: 1.7fr 1.3fr;
-  gap: 30px;
-  margin-top: 30px;
-}
-
-
-/* Money Flow Chart */
-.money-flow-chart {
-  background: var(--color-background);
-  width: 100%;
-  border: 1px solid #e0e0e0;
-  border-radius: 16px;
-  padding: 25px;
-}
-
-.chart-header {
+.charts-section {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+}
+
+.charts-section h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text);
+  font-family: 'Poppins', sans-serif;
   margin-bottom: 20px;
 }
 
-.chart-header h3 {
-  font-size: 18px;
-  font-family: Poppins, sans-serif;
-  font-weight: 600;
-  color: var(--color-text);
-  margin: 0;
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+  flex: 1;
 }
 
-.time-filter {
-  padding: 8px 12px;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 12px;
-  background: var(--color-background);
+@media (max-width: 1200px) {
+  .statistics-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .stat-card {
+    min-width: auto;
+  }
 }
 
-.chart-area {
-  height: 200px;
-  background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
-  border-radius: 12px;
-  position: relative;
-}
-
-
-/* Expenses Card */
-.expenses-card {
-  background: var(--color-background);
-  border: 1px solid #e0e0e0;
-  border-radius: 16px;
-  padding: 25px;
-}
-
-.expenses-card h3 {
-  font-family: Poppins, sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--color-text);
-  margin: 0 0 20px 0;
-}
-
-.expense-stats {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
-}
-
-.expense-stat {
-  text-align: center;
-}
-
-.expense-stat .period {
-  font-size: 12px;
-  color: #666;
-  margin: 0 0 4px 0;
-}
-
-.expense-stat .amount {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-text);
-  margin: 0;
-}
-
-.donut-chart {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: conic-gradient(var(--color-charts) 0deg 120deg,
-      var(--color-charts-secondary) 120deg 200deg,
-      var(--color-charts-three) 200deg 280deg,
-      #e0e0e0 280deg 360deg);
-  margin: 20px auto;
-  position: relative;
-}
-
-.donut-chart::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
-  background: var(--color-background);
-  border-radius: 50%;
-}
-
-.chart-legend {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-}
-
-.legend-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-}
-
-.legend-color.housing {
-  background: var(--color-charts);
-}
-
-.legend-color.food {
-  background: var(--color-charts-secondary);
-}
-
-.legend-color.transport {
-  background: var(--color-charts-three);
-}
-
-.legend-color.shopping {
-  background: #e0e0e0;
-}
 </style>

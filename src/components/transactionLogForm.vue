@@ -177,6 +177,19 @@ const saveTransaction = async () => {
     }
 }
 
+const confirmDelete = async () => {
+    if (confirm('Are you sure you want to delete this transaction?')) {
+        try {
+            await deleteTransaction(editableTransaction.value.id)
+            emit('delete', editableTransaction.value.id)
+            closeModal()
+        } catch (error) {
+            console.error('Error deleting transaction:', error)
+            alert('Failed to delete transaction. Please try again.')
+        }
+    }
+}
+
 // Helper functions
 const getCategoryIcon = (category) => {
     const icons = {

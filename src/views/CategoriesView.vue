@@ -64,7 +64,6 @@
               <div class="stat-card expenses">
                 <p class="stat-label">Expenses</p>
                 <p class="stat-number">DK {{ totalExpenses.toFixed(2) }}</p>
-                <p class="stat-subtitle">5% more than previous month</p>
                 <div class="stat-trend">
                   <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
                 </div>
@@ -73,7 +72,6 @@
               <div class="stat-card income">
                 <p class="stat-label">Income</p>
                 <p class="stat-number">DK {{ totalIncome.toFixed(2) }}</p>
-                <p class="stat-subtitle">5% less than previous month</p>
                 <div class="stat-trend">
                   <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
                 </div>
@@ -486,12 +484,6 @@ body {
   font-size: 18px;
   font-weight: 600;
   margin: 0 0 4px 0;
-}
-
-.stat-subtitle {
-  font-size: 10px;
-  margin: 0;
-  opacity: 0.7;
 }
 
 .stat-trend {
