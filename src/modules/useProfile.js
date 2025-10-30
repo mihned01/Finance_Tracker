@@ -4,6 +4,7 @@ import { doc, deleteDoc, collection, getDocs, writeBatch } from 'firebase/firest
 import { db } from './firebase'
 import { useAuth } from './useAuth'
 import { useTransactions } from './useTransactions'
+import { useCurrency } from './useCurrency'
 
 export function useProfile() {
   const { currentUser } = useAuth()
@@ -44,6 +45,7 @@ export function useProfile() {
     return balance.value >= 0 ? '+2.5% this month' : '-1.2% this month'
   })
 
+  const { formatCurrency } = useCurrency()
 
   // Methods
   const editProfile = () => {
@@ -253,6 +255,7 @@ export function useProfile() {
     lastLoginDate,
     balanceChangeClass,
     balanceChangeText,
+    formatCurrency,
 
     // Methods
     editProfile,
