@@ -4,7 +4,6 @@ import { doc, deleteDoc, collection, getDocs, writeBatch } from 'firebase/firest
 import { db } from './firebase'
 import { useAuth } from './useAuth'
 import { useTransactions } from './useTransactions'
-import { useCurrency } from './useCurrency'
 
 export function useProfile() {
   const { currentUser } = useAuth()
@@ -25,9 +24,9 @@ export function useProfile() {
   const joinDate = computed(() => {
     if (currentUser.value?.metadata?.creationTime) {
       const creationDate = new Date(currentUser.value.metadata.creationTime)
-      return creationDate.toLocaleDateString('en-GB', { 
-        year: 'numeric', 
-        month: 'long' 
+      return creationDate.toLocaleDateString('en-GB', {
+        year: 'numeric',
+        month: 'long'
       })
     }
     return 'January 2024' // fallback
@@ -72,7 +71,7 @@ export function useProfile() {
 
       const dataStr = JSON.stringify(dataToExport, null, 2)
       const dataBlob = new Blob([dataStr], { type: 'application/json' })
-      
+
       const url = URL.createObjectURL(dataBlob)
       const link = document.createElement('a')
       link.href = url
@@ -105,7 +104,7 @@ export function useProfile() {
 
     try {
       isProcessing.value = true
-      
+
       await updateProfile(currentUser.value, {
         displayName: editDisplayName.value.trim()
       })
@@ -127,7 +126,7 @@ export function useProfile() {
 
   const changePassword = async () => {
     const newPassword = prompt('Enter your new password (minimum 6 characters):')
-    
+
     if (!newPassword) {
       return
     }
@@ -138,7 +137,7 @@ export function useProfile() {
     }
 
     const confirmPassword = prompt('Confirm your new password:')
-    
+
     if (newPassword !== confirmPassword) {
       alert('Passwords do not match')
       return
@@ -174,12 +173,12 @@ export function useProfile() {
 
       const transactionsRef = collection(db, 'users', currentUser.value.uid, 'transactions')
       const snapshot = await getDocs(transactionsRef)
-      
+
       const batch = writeBatch(db)
       snapshot.docs.forEach(doc => {
         batch.delete(doc.ref)
       })
-      
+
       await batch.commit()
 
       // Clear local state
@@ -214,16 +213,16 @@ export function useProfile() {
 
       const transactionsRef = collection(db, 'users', currentUser.value.uid, 'transactions')
       const transactionsSnapshot = await getDocs(transactionsRef)
-      
+
       const batch = writeBatch(db)
-      
+
       transactionsSnapshot.docs.forEach(doc => {
         batch.delete(doc.ref)
       })
-      
+
       const userDocRef = doc(db, 'users', currentUser.value.uid)
       batch.delete(userDocRef)
-      
+
       await batch.commit()
 
       await deleteUser(currentUser.value)

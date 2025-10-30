@@ -34,7 +34,6 @@
                   <h2>Total Balance:</h2>
                   <p class="balance">DK 10 000,00</p>
                   <div class="month-select">
-                    <!--Left for future code: <option>Sept 2025</option> -->
                     Sept 2025
                   </div>
                 </div>
@@ -105,7 +104,7 @@
               amounts instantly so nothing slips through the cracks.</p>
           </div>
           <div class="feature-box-bottom">
-            <img src="@/assets/images/feature1.png" alt="chart example">
+            <img src="@/assets/images/feat1.png" alt="chart example">
           </div>
         </div>
         <div class="feature-box">
@@ -653,8 +652,6 @@ body {
   gap: 20px;
 }
 
-
-/* You can also remove the JavaScript hover effects since CSS handles it better */
 .feature-box {
   background: rgba(128, 255, 206, 0.5);
   border: 0.1px solid #2d2d2d;
@@ -663,7 +660,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add this transition */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .feature-box:hover {
@@ -1000,27 +997,27 @@ body {
     margin: 20px 120px;
     height: 80vh;
   }
-  
+
   .hero {
     height: 75vh;
     padding: 0 8%;
     border-radius: 30px;
   }
-  
+
   .hero-left h1 {
     font-size: 44px;
   }
-  
+
   .hero-left p {
     font-size: 22px;
     margin: 20px 0 30px 0;
   }
-  
+
   .hero-left button {
     padding: 16px 35px;
     font-size: 18px;
   }
-  
+
   .transaction-card {
     max-width: 520px;
   }
@@ -1044,22 +1041,22 @@ body {
   .balance {
     font-size: 28px;
   }
-  
+
   /* Process Section */
   .process-section {
     margin: 20px 140px;
   }
-  
+
   .process-section h2 {
     font-size: 40px;
     margin-bottom: 40px;
   }
-  
+
   .steps-section {
     width: 100%;
     margin: 80px 0;
   }
-  
+
   .step-one,
   .step-two,
   .step-three {
@@ -1067,87 +1064,87 @@ body {
     width: 180px;
     margin-bottom: 30px;
   }
-  
+
   .step p {
     font-size: 22px;
   }
-  
+
   .connector {
     max-width: 250px;
   }
-  
+
   /* Features Section */
   .features-section {
     margin: 20px 140px;
   }
-  
+
   .features-section h2 {
     font-size: 40px;
   }
-  
-  .features-section > p {
+
+  .features-section>p {
     font-size: 22px;
     width: 60%;
     margin-bottom: 60px;
   }
-  
+
   .features-container {
     gap: 40px;
     margin: 0 0 60px 0;
   }
-  
+
   .feature-box-top {
     padding: 50px 50px 0 50px;
   }
-  
+
   .feature-box-top h3 {
     font-size: 24px;
     margin-bottom: 25px;
   }
-  
+
   .feature-box-top p {
     font-size: 18px;
   }
-  
+
   .feature-box-bottom {
     padding: 0 50px 50px 50px;
   }
-  
+
   /* Security Section */
   .security-section {
     margin: 20px 140px 40px 140px;
   }
-  
+
   .security-section h2 {
     font-size: 40px;
   }
-  
-  .security-section > p {
+
+  .security-section>p {
     font-size: 22px;
     width: 60%;
     margin-bottom: 60px;
   }
-  
+
   .security-top,
   .security-bottom {
     gap: 40px;
     margin-bottom: 40px;
   }
-  
+
   .security-top-left,
   .security-top-right,
   .security-bottom-left,
   .security-bottom-right {
     height: 340px;
   }
-  
+
   .security-top-left-text,
   .security-top-right-text,
   .security-bottom-left-text,
   .security-bottom-right-text {
     margin: 50px 0 50px 50px;
   }
-  
+
   .security-top-left-text h3,
   .security-top-right-text h3,
   .security-bottom-left-text h3,
@@ -1155,14 +1152,14 @@ body {
     font-size: 24px;
     margin-bottom: 25px;
   }
-  
+
   .security-top-left-text p,
   .security-top-right-text p,
   .security-bottom-left-text p,
   .security-bottom-right-text p {
     font-size: 18px;
   }
-  
+
   .security-top-left-icon,
   .security-top-right-icon,
   .security-bottom-left-icon,
@@ -1179,6 +1176,4 @@ body {
     z-index: 1;
   }
 }
-
-
 </style>

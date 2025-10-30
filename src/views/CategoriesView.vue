@@ -1,4 +1,3 @@
-
 <template>
   <div class="dashboard-container">
     <transactionLogForm ref="transactionFormRef" />
@@ -184,7 +183,7 @@ const handleLogout = async () => {
 // reactive state for selected category
 const selectedCategory = ref('all')
 
-// Computed properties for category statistics
+// computed properties for category statistics
 const categoryStats = computed(() => {
   const categories = [
     { name: 'Rent & Bills', displayName: 'Rent & bills' },

@@ -48,7 +48,6 @@ export function useTransactions() {
       const q = query(
         collection(db, transactionsFBcollectionRef),
         where("userId", "==", user.uid)
-        // orderBy("createdAt", "desc") - commented out to avoid index requirement
       );
       
       unsubscribe = onSnapshot(q, 

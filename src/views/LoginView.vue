@@ -139,8 +139,8 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--color-main);
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
+  padding: 0;
+  margin: 0;
 }
 
 .form-container {
@@ -175,8 +175,8 @@ body {
   flex-direction: column;
   color: var(--color-text);
   position: relative;
-  justify-content: center; /* Add this */
-  align-items: center; /* Add this */
+  justify-content: center;
+  align-items: center;
 }
 
 .green-content {
@@ -185,7 +185,7 @@ body {
   justify-content: center;
   align-items: center;
   flex: 1;
-  text-align: center; /* Add this for better text alignment */
+  text-align: center;
 }
 
 .green-section.login {
@@ -214,7 +214,7 @@ body {
   align-items: center;
   gap: 6px;
   backdrop-filter: blur(10px);
-  z-index: 10; /* Ensure it's above other content */
+  z-index: 10;
 }
 
 .back-to-home-btn:hover {
@@ -238,7 +238,7 @@ body {
   align-items: center;
   gap: 6px;
   backdrop-filter: blur(10px);
-  z-index: 10; /* Ensure it's above other content */
+  z-index: 10;
 
 }
 

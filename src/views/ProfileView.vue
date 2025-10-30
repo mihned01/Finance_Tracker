@@ -75,36 +75,36 @@
         <!-- Stats Overview -->
         <div class="stats-grid">
 
-<div class="stat-card balance">
-  <div class="stat-icon">
-    <img src="@/assets/icons/chart-line-solid-full.svg" alt="Balance">
-  </div>
-  <div class="stat-content">
-    <h3>Current Balance</h3>
-    <p class="stat-value">{{ balance.toFixed(2) }}</p> <!-- Updated -->
-    <span class="stat-change" :class="balanceChangeClass">{{ balanceChangeText }}</span>
-  </div>
-</div>
+          <div class="stat-card balance">
+            <div class="stat-icon">
+              <img src="@/assets/icons/chart-line-solid-full.svg" alt="Balance">
+            </div>
+            <div class="stat-content">
+              <h3>Current Balance</h3>
+              <p class="stat-value">{{ balance.toFixed(2) }}</p>
+              <span class="stat-change" :class="balanceChangeClass">{{ balanceChangeText }}</span>
+            </div>
+          </div>
 
-<div class="stat-card expenses">
-  <div class="stat-icon">
-    <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="Expenses">
-  </div>
-  <div class="stat-content">
-    <h3>Total Expenses</h3>
-    <p class="stat-value expense">-{{ totalExpenses.toFixed(2) }}</p> <!-- Updated -->
-  </div>
-</div>
+          <div class="stat-card expenses">
+            <div class="stat-icon">
+              <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="Expenses">
+            </div>
+            <div class="stat-content">
+              <h3>Total Expenses</h3>
+              <p class="stat-value expense">-{{ totalExpenses.toFixed(2) }}</p>
+            </div>
+          </div>
 
-<div class="stat-card income">
-  <div class="stat-icon">
-    <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="Income">
-  </div>
-  <div class="stat-content">
-    <h3>Total Income</h3>
-    <p class="stat-value income">+{{ totalIncome.toFixed(2) }}</p> <!-- Updated -->
-  </div>
-</div>
+          <div class="stat-card income">
+            <div class="stat-icon">
+              <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="Income">
+            </div>
+            <div class="stat-content">
+              <h3>Total Income</h3>
+              <p class="stat-value income">+{{ totalIncome.toFixed(2) }}</p>
+            </div>
+          </div>
         </div>
 
         <!-- Main Content Sections -->
@@ -150,8 +150,8 @@
           </div>
 
 
-         <!-- Account Actions -->
-         <div class="section-card danger-zone">
+          <!-- Account Actions -->
+          <div class="section-card danger-zone">
             <div class="section-header">
               <h3>
                 <img src="@/assets/icons/gear-solid-full.svg" alt="Warning">
@@ -169,7 +169,7 @@
                     {{ isProcessing ? 'Processing...' : 'Change Password' }}
                   </button>
                 </div>
-                
+
                 <div class="danger-item">
                   <div class="danger-info">
                     <h4>Clear All Data</h4>
@@ -179,7 +179,7 @@
                     {{ isProcessing ? 'Clearing...' : 'Clear Data' }}
                   </button>
                 </div>
-                
+
                 <div class="danger-item">
                   <div class="danger-info">
                     <h4>Delete Account</h4>
@@ -752,7 +752,8 @@ body {
   margin-top: 20px;
 }
 
-.save-btn, .cancel-btn {
+.save-btn,
+.cancel-btn {
   padding: 8px 16px;
   border: none;
   border-radius: 6px;
@@ -877,7 +878,7 @@ body {
   .stats-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
-  
+
   .info-grid {
     grid-template-columns: 1fr;
   }
@@ -889,16 +890,16 @@ body {
     gap: 20px;
     text-align: center;
   }
-  
+
   .header-actions {
     width: 100%;
     justify-content: center;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .financial-overview {
     grid-template-columns: 1fr;
   }
@@ -909,7 +910,4 @@ body {
     text-align: center;
   }
 }
-
-
-
 </style>

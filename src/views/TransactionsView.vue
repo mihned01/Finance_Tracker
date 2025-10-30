@@ -200,7 +200,7 @@
           <transactionLogForm :is-open="isModalOpen" :transaction="selectedTransaction" @close="closeModal"
             @save="handleTransactionSave" @delete="handleTransactionDelete" />
 
-          
+
         </div>
       </div>
     </div>
@@ -382,6 +382,7 @@ body {
   background: #f6f6f6;
   margin-bottom: 1rem;
 }
+
 .user-info h2 {
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
