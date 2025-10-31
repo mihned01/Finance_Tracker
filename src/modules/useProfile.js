@@ -44,7 +44,6 @@ export function useProfile() {
     return balance.value >= 0 ? '+2.5% this month' : '-1.2% this month'
   })
 
-  const { formatCurrency } = useCurrency()
 
   // Methods
   const editProfile = () => {
@@ -254,7 +253,6 @@ export function useProfile() {
     lastLoginDate,
     balanceChangeClass,
     balanceChangeText,
-    formatCurrency,
 
     // Methods
     editProfile,

@@ -8,7 +8,7 @@
         </div>
         <div class="user-info">
           <h2>{{ userDisplayName }}</h2>
-          <p>Balance: {{ formatCurrency(balance) }}</p>
+          <p>Balance: DK {{ balance.toFixed(2) }}</p>
         </div>
       </div>
 
@@ -208,7 +208,6 @@ import { useProfile } from '@/modules/useProfile'
 const router = useRouter()
 const { currentUser, logout } = useAuth()
 const { balance, totalExpenses, totalIncome } = useTransactions()
-const { formatCurrency } = useCurrency()
 
 // Use the profile module (removed financial summary related properties)
 

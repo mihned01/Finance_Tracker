@@ -64,7 +64,6 @@
               <div class="stat-card expenses">
                 <p class="stat-label">Expenses</p>
                 <p class="stat-number">DK {{ totalExpenses.toFixed(2) }}</p>
-                <p class="stat-subtitle">5% more than previous month</p>
                 <div class="stat-trend">
                   <img src="@/assets/icons/arrow-trend-down-solid-full.svg" alt="trend">
                 </div>
@@ -73,7 +72,6 @@
               <div class="stat-card income">
                 <p class="stat-label">Income</p>
                 <p class="stat-number">DK {{ totalIncome.toFixed(2) }}</p>
-                <p class="stat-subtitle">5% less than previous month</p>
                 <div class="stat-trend">
                   <img src="@/assets/icons/arrow-trend-up-solid-full.svg" alt="trend">
                 </div>
@@ -170,6 +168,16 @@ import { useRouter } from 'vue-router'
 import { useAuth } from '@/modules/useAuth'
 import { useTransactions } from '@/modules/useTransactions'
 import transactionLogForm from '@/components/transactionLogForm.vue'
+
+import utensilsIcon from '@/assets/icons/utensils-solid-full.svg'
+import carIcon from '@/assets/icons/car-solid-full.svg'
+import bagIcon from '@/assets/icons/bag-shopping-solid-full.svg'
+import bookIcon from '@/assets/icons/book-open-solid-full.svg'
+import boltIcon from '@/assets/icons/bolt-solid-full.svg'
+import planeIcon from '@/assets/icons/plane-solid-full.svg'
+import heartIcon from '@/assets/icons/heart-pulse-solid-full.svg'
+import dollarIcon from '@/assets/icons/dollar-sign-solid-full.svg'
+import categoryIcon from '@/assets/icons/category.svg'
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()

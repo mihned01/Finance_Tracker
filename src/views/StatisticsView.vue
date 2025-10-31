@@ -250,7 +250,7 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/modules/useAuth'
 import { useTransactions } from '@/modules/useTransactions'
-import DonutChart from '@/components/charts/donutChart.vue'
+import DonutChart from '@/components/charts/DonutChart.vue'
 
 const router = useRouter()
 const { currentUser, logout } = useAuth()
