@@ -175,7 +175,7 @@ import bagIcon from '@/assets/icons/bag-shopping-solid-full.svg'
 import bookIcon from '@/assets/icons/book-open-solid-full.svg'
 import boltIcon from '@/assets/icons/bolt-solid-full.svg'
 import planeIcon from '@/assets/icons/plane-solid-full.svg'
-import heartIcon from '@/assets/icons/heart-pulse-solid-full.svg'
+import heartIcon from '@/assets/icons/capsules-solid-full.svg'
 import dollarIcon from '@/assets/icons/dollar-sign-solid-full.svg'
 import categoryIcon from '@/assets/icons/category.svg'
 
